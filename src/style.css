@@ -37,49 +37,74 @@ html {
 
 /* main sidebar */
 .main-sidebar {
+    margin: 10px 0px 10px 10px;
+    padding: 0;
     flex: .5;
     display: flex;
     flex-direction: column;
-    border: 2px solid var(--light-blue);
+    /* border: 2px solid var(--light-blue); */
     background-color: var(--dark-blue);
 }
 
 .sidebar-title  {
     flex: .25;
     width: 100%;
-    border: 1px solid green;
+    /* border: 1px solid green; */
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: var(--middle-blue);
+    text-align: center;
+}
+
+#sidebar-title-text {
+    color: white;
 }
 
 .sidebar-project-list {
     flex: 2.25;
     width: 100%;
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
+    
 }
 
 .sidebar-main-list {
     margin: 0;
-    padding: 0;
+    padding: 8px;
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow: auto;
+    gap: 10px;
+}
+
+.sidebar-list-item {
+    margin: 0;
+    padding: 8px;
+    /* border: 1px solid white; */
+    list-style-type: none;
+    text-decoration: none;
+    list-style: none;
+    background-color: var(--light-blue);
+    height: 25px;
+    color: black;
+    /* letter-spacing: 1px; */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 5px;
+    font-size: 90%;
 }
 
 .sidebar-create-new-btn {
     flex: .5;
     width: 100%;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--middle-blue);
+    background-color: var(--black-color);
 }
-
-
 
 /* ************************* main body ************************** */
 .main-body {
@@ -95,6 +120,7 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
+    /* border: 1px solid green; */
 }
 
 #header-text {
@@ -109,26 +135,21 @@ html {
     flex: 2.75;
     display: flex;
     flex-direction: column;
-    border: 2px solid var(--light-blue);
-}
-
-.list-title {
-    flex: .25;
-    border: 1px solid green;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /* border: 10px solid var(--black-color); */
+    /* margin: 10px; */
+    margin: 10px;
+    padding: 0;
+    gap: 10px;
 }
 
 .list-container {
     flex: 2.25;
-    /* height: 400px;
-    width: 100%; */
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
     margin: 0;
-    padding: 0;
+    padding: 8px;
     display: flex;
     overflow: auto;
+    background-color: var(--dark-blue);
 }
 
 .ordered-item-list {
@@ -140,26 +161,82 @@ html {
     display: flex;
     flex-direction: column;
     overflow: auto;
+    gap: 10px;
 }
 
 .list-item {
     margin: 0;
-    padding: 0;
-    border: 1px solid white;
+    padding: 0 0 0 8px;
+    /* border: 1px solid white; */
     list-style-type: none;
     text-decoration: none;
     list-style: none;
-    background-color: var(--light-blue);
-    height: 75px;
+    background-color: var(--closetowhite);
+    height: 50px;
     color: black;
     letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+    font-size: 85%;
+}
+
+
+
+.item-options-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    width: 35%;
+    height: 100%;
+}
+
+.item-delete-btn {
+    flex: 1;
+    /* height: 100%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: auto; */
+    /* border: 1px solid var(--dark-blue); */
+    height: 100%;
+}
+#delete-item {
+    border: none;
+    border-radius: 10px;
+}
+
+.item-details-btn {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid var(--dark-blue); */
+    height: 100%;
+}
+#item-details {
+    border: none;
+    border-radius: 10px;
+}
+
+.item-date-created {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid var(--dark-blue); */
+    height: 100%;
 }
 
 .details-container {
-    flex: .5;
-    border: 1px solid red;
+    flex: 1;
+    /* border: 1px solid red; */
     display: flex;
     justify-content: center;
+    background-color: var(--middle-blue);
     /* align-items: center; */
 }
 
