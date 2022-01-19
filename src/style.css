@@ -182,6 +182,7 @@ html {
     overflow: auto;
     background-color: var(--dark-blue);
     border-radius: 5px;
+    gap: 25px;
 }
 
 .ordered-item-list {
@@ -207,13 +208,12 @@ html {
 /* *********************each item********************* */
 .list-item {
     margin: 0;
-    padding: 0 0 0 8px;
-    /* border: 1px solid white; */
+    padding: 0 8px 0 8px;
     list-style-type: none;
     text-decoration: none;
     list-style: none;
     background-color: var(--closetowhite);
-    height: 35px;
+    height: 50px;
     color: black;
     letter-spacing: 1px;
     display: flex;
@@ -279,11 +279,12 @@ html {
     background-color: var(--dark-blue);
     /* align-items: center; */
     border-radius: 5px;
+    padding: 10px;
 }
 
 .details-title {
     color: var(--closetowhite);
-    font-size: 95%;
+    font-size: 100%;
 }
 
 .display {
@@ -306,6 +307,8 @@ html {
     color: var(--closetowhite);
     padding: 5px;
     /* width: 50px; */
+    width: 75%;
+    font-size: 75%;
 }
 
 
