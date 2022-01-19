@@ -42,14 +42,15 @@ html {
     /* margin: 10px 0px 10px 10px; */
     margin: 0;
     padding: 0;
-    flex: .5;
+    flex: 1;
     display: flex;
     flex-direction: column;
     /* border: 2px solid var(--light-blue); */
     /* background-color: var(--dark-blue); */
+    /* filter: blur(50%); */
     gap: 10px;
-    transition-duration: .5s;    
-    transition: ease-in-out;
+    border-radius: 5px;
+    transition: all 1s ease-in;
 }
 
 
@@ -102,6 +103,11 @@ html {
     justify-content: flex-start;
     border-radius: 5px;
     font-size: 90%;
+}
+
+#current-p {
+    background-color: var(--closetowhite);
+    height: 35px;
 }
 
 .sidebar-create-new-btn {
@@ -172,12 +178,14 @@ html {
     margin: 0;
     padding: 8px;
     display: flex;
+    flex-direction: column;
     overflow: auto;
     background-color: var(--dark-blue);
+    border-radius: 5px;
 }
 
 .ordered-item-list {
-    flex: 1;
+    flex: 2;
     /* height: 100%;
     width: 100%; */
     margin: 0;
@@ -188,6 +196,15 @@ html {
     gap: 10px;
 }
 
+.list-item-options {
+    flex: .25;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+
+/* *********************each item********************* */
 .list-item {
     margin: 0;
     padding: 0 0 0 8px;
@@ -206,9 +223,8 @@ html {
     font-size: 85%;
 }
 
-
-
 .item-options-container {
+    /* flex: .5; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -256,17 +272,40 @@ html {
 }
 
 .details-container {
-    flex: 1;
-    /* border: 1px solid red; */
+    flex: .5;
+    /* border: 1px solid var(--closetowhite); */
     display: flex;
     justify-content: center;
-    background-color: var(--middle-blue);
+    background-color: var(--dark-blue);
     /* align-items: center; */
+    border-radius: 5px;
+}
+
+.details-title {
+    color: var(--closetowhite);
+    font-size: 95%;
 }
 
 .display {
     display: none;
-    
+    animation: ease-in 1s;
+}
+
+.btn {
+    background-color: black;
+    border: none;
+    border-radius: 5px;
+    color: var(--closetowhite);
+    padding: 10px;
+}
+
+.item-btn {
+    background-color: black;
+    border: none;
+    border-radius: 5px;
+    color: var(--closetowhite);
+    padding: 5px;
+    /* width: 50px; */
 }
 
 

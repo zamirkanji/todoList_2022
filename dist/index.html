@@ -13,13 +13,13 @@
         </div>
         <div class="sidebar-project-list">
             <ul class="sidebar-main-list">
-                <li class="sidebar-list-item text">Current Project</li>
+                <li class="sidebar-list-item text" id="current-p">Current Project</li>
                 <li class="sidebar-list-item text">Today</li>
                 <li class="sidebar-list-item text">Week</li>
             </ul>
         </div>
         <div class="sidebar-create-new-btn">
-            <button class="create-new-btn text">CLICK</button>
+            <button class="create-new-btn btn text">New Project</button>
         </div>
     </div>
     
@@ -41,23 +41,63 @@
                         <p id="item-text">Go shopping</p>
                         <div class="item-options-container">
                             <div class="item-delete-btn">
-                                <button id="delete-item">Del</button>
+                                <button id="delete-item" class="item-btn">Del</button>
                             </div>
                             <div class="item-details-btn">
-                                <button id="item-details">Det</button>
+                                <button id="item-details" class="item-btn">Det</button>
                             </div>
                             <div class="item-date-created">
                                 <p>1.17.22</p>
                             </div>
                         </div>
                     </li>
-                    <li class="list-item text">Change Tires</li>
-                    <li class="list-item text">Code</li>
+                    <li class="list-item text">Change Tires
+                        <div class="item-options-container">
+                            <div class="item-delete-btn">
+                                <button id="delete-item" class="item-btn">Del</button>
+                            </div>
+                            <div class="item-details-btn">
+                                <button id="item-details" class="item-btn">Det</button>
+                            </div>
+                            <div class="item-date-created">
+                                <p>1.18.22</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-item text">Code
+                        <div class="item-options-container">
+                            <div class="item-delete-btn">
+                                <button id="delete-item" class="item-btn">Del</button>
+                            </div>
+                            <div class="item-details-btn">
+                                <button id="item-details" class="item-btn">Det</button>
+                            </div>
+                            <div class="item-date-created">
+                                <p>1.18.22</p>
+                            </div>
+                        </div>
+                    </li>
                     <li class="list-item text">Pick up cat food</li>
-                    <li class="list-item text">Test</li>
-                    <li class="list-item text">Test</li>
+                    <li class="list-item text">Extend AppleCare+</li>
+                    <li class="list-item text">Pick up addy
+                        <div class="item-options-container">
+                            <div class="item-delete-btn">
+                                <button id="delete-item" class="item-btn">Del</button>
+                            </div>
+                            <div class="item-details-btn">
+                                <button id="item-details" class="item-btn">Det</button>
+                            </div>
+                            <div class="item-date-created">
+                                <p>1.18.22</p>
+                            </div>
+                        </div>
+                    </li>
 
                 </ol>
+                <div class="list-item-options">
+                    <button id="create-new-item-btn" class="btn">+</button>
+                    <button id="clear-all-items-btn" class="btn">Clear All</button>
+                </div>
             </div>
             <div class="details-container">
                 <div class="details-title text">My Project</div>
