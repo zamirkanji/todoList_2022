@@ -33,7 +33,7 @@ html {
     /* overflow: hidden; */
     display: flex;
     /* flex-direction: column; */
-    /* background-color: black; */
+    background-color: black;
     gap: 10px;
 }
 
@@ -202,6 +202,29 @@ html {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    /* border: 1px solid violet; */
+}
+
+#create-new-item-btn {
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-main {
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+    width: 50%;
+    /* border: 1px solid violet; */
+    /* align-items: center; */
+}
+
+#input-new-item {
+    border-radius: 5px;
+    border: none;
+    width: 75%;
 }
 
 
@@ -307,7 +330,8 @@ html {
     color: var(--closetowhite);
     padding: 5px;
     /* width: 50px; */
-    width: 75%;
+    width: 65%;
+    height: 65%;
     font-size: 75%;
 }
 
