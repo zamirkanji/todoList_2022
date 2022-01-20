@@ -57,13 +57,14 @@ html {
 .sidebar-title  {
     flex: .25;
     width: 100%;
-    /* border: 1px solid green; */
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: var(--middle-blue);
     text-align: center;
     border-radius: 5px;
+    letter-spacing: 1px;
+    font-size: 100%;
 }
 
 #sidebar-title-text {
@@ -73,7 +74,6 @@ html {
 .sidebar-project-list {
     flex: 2.25;
     width: 100%;
-    /* border: 1px solid yellow; */
     border-radius: 5px;
 }
 
@@ -90,19 +90,18 @@ html {
 .sidebar-list-item {
     margin: 0;
     padding: 8px;
-    /* border: 1px solid white; */
     list-style-type: none;
     text-decoration: none;
     list-style: none;
     background-color: var(--light-blue);
     height: 25px;
     color: black;
-    /* letter-spacing: 1px; */
+    letter-spacing: 1px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     border-radius: 5px;
-    font-size: 90%;
+    font-size: 100%;
 }
 
 #current-p {
@@ -113,7 +112,6 @@ html {
 .sidebar-create-new-btn {
     flex: .5;
     width: 100%;
-    /* border: 1px solid red; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -137,13 +135,11 @@ html {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* border: 1px solid green; */
 }
 
 .menu-icon{
     width: 35px;
     height: 35px;
-    /* background-color: var(--light-blue); */
 }
 #menu-icon {
     background-image: url('./img/menu.png');
@@ -174,7 +170,6 @@ html {
 
 .list-container {
     flex: 2.25;
-    /* border: 1px solid yellow; */
     margin: 0;
     padding: 8px;
     display: flex;
@@ -231,10 +226,10 @@ html {
 /* *********************each item********************* */
 .list-item {
     margin: 0;
-    padding: 0 8px 0 8px;
-    list-style-type: none;
+    padding: 0 0 0 8px;
+    /* list-style-type: none;
     text-decoration: none;
-    list-style: none;
+    list-style: none; */
     background-color: var(--closetowhite);
     height: 50px;
     color: black;
@@ -243,34 +238,73 @@ html {
     align-items: center;
     justify-content: space-between;
     border-radius: 5px;
-    font-size: 85%;
+    font-size: 100%;
 }
 
+/* #item-text {
+    list-style-type: decimal;
+    background-color: var(--dark-blue);
+} */
+
 .item-options-container {
-    /* flex: .5; */
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0;
     padding: 0;
-    width: 35%;
+    width: 15%;
     height: 100%;
 }
 
 .item-delete-btn {
     flex: 1;
-    /* height: 100%; */
     display: flex;
     justify-content: center;
     align-items: center;
-    /* height: auto; */
-    /* border: 1px solid var(--dark-blue); */
     height: 100%;
 }
+
+
 #delete-item {
     border: none;
     border-radius: 10px;
+    background-color: var(--closetowhite);
 }
+
+
+#delete-icon {
+    width: 24px;
+    height: 24px;
+    background-image: url('./img/delete.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+    color: white;
+}
+
+.expand-icon-btn {
+    background-color: var(--closetowhite);
+    border: none;
+    flex: 1;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.expand-icon {
+    width: 24px;
+    height: 24px;
+    background-image: url('./img/chevron-down\ \(1\).png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+}
+
+
+
 
 .item-details-btn {
     flex: 1;
@@ -294,6 +328,24 @@ html {
     height: 100%;
 }
 
+.expand-container {
+    margin: 0;
+    padding: 0 8px 0 8px;
+    list-style-type: none;
+    text-decoration: none;
+    list-style: none;
+    background-color: var(--closetowhite);
+    height: 150px;
+    color: black;
+    letter-spacing: 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-radius: 5px;
+    font-size: 85%;
+}
+
 .details-container {
     flex: .5;
     /* border: 1px solid var(--closetowhite); */
@@ -309,6 +361,16 @@ html {
     color: var(--closetowhite);
     font-size: 100%;
 }
+
+
+
+
+
+
+
+
+
+/* ******************** general ********************** */
 
 .display {
     display: none;
