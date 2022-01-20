@@ -3,7 +3,7 @@ import menuIcon from './img/menu.png';
 import expand from './img/noun-expand-1181747.png';
 import { mdiChevronDown } from '@mdi/js';
 // import delete from './img/delete.png';
-import { getDate, ListItem } from './item';
+import { getDate, ListItem } from './app.js';
 
 
 const menuEventListener = (() => {
@@ -65,3 +65,20 @@ console.log(LOCALSTOR);
 
 const testItem = new ListItem('z', "asdfasdf", getDate());
 console.log(testItem);
+
+const getValue = () => {
+    console.log('test');
+    const inputValue = document.querySelector('#input-new-item').value;
+    return console.log(inputValue);
+}
+
+const formSubmission = ((e)=> {
+    const form = document.querySelector('.form-main');
+    
+    form.addEventListener('submit', (e)=> {
+        const inputValue = document.querySelector('#input-new-item').value;
+        //remove form display
+        e.preventDefault();
+        console.log(inputValue);
+    })
+})();

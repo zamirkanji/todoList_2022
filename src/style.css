@@ -207,11 +207,13 @@ html {
     align-items: center;
 }
 
+
+
 .form-main {
     display: flex;
     justify-content: space-between;
     gap: 25px;
-    width: 50%;
+    width: 75%;
     /* border: 1px solid violet; */
     /* align-items: center; */
 }
