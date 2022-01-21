@@ -3,7 +3,7 @@ import menuIcon from './img/menu.png';
 import expand from './img/noun-expand-1181747.png';
 import { mdiChevronDown } from '@mdi/js';
 // import delete from './img/delete.png';
-import { getDate, ListItem } from './app.js';
+import { getDate, itemListArr, ListItem } from './app.js';
 
 
 const menuEventListener = (() => {
@@ -51,17 +51,10 @@ const newItemBtnListener = (() => {
 
 //         const details = document.createElement('div');
 //         details.classList.add('details-container');
-//         goShoppingItemTest.appendChild(details);
-
-        
-        
-
-       
+//         goShoppingItemTest.appendChild(details);  
 //     })
 // })();
 
-const LOCALSTOR = window.localStorage;
-console.log(LOCALSTOR);
 
 const testItem = new ListItem('z', "asdfasdf", getDate());
 console.log(testItem);
@@ -72,6 +65,22 @@ const getValue = () => {
     return console.log(inputValue);
 }
 
+const createItemHTML = (i) => {
+    const orderedListNode = document.querySelector('.ordered-item-list');
+    
+    const lastItem = itemListArr[itemListArr.length - 1];
+    console.log(lastItem);
+    console.log(i, i.name);
+    const newListItem = document.createElement('li');
+    newListItem.classList.add('list-item');
+    newListItem.classList.add('text');
+
+    newListItem.textContent = i.name;
+
+    orderedListNode.appendChild(newListItem);
+
+}
+
 const formSubmission = ((e)=> {
     const form = document.querySelector('.form-main');
     
@@ -79,6 +88,24 @@ const formSubmission = ((e)=> {
         const inputValue = document.querySelector('#input-new-item').value;
         //remove form display
         e.preventDefault();
-        console.log(inputValue);
+        
+        const item = new ListItem(`${inputValue}`, getDate());
+
+        itemListArr.push(item);
+        console.log(itemListArr);
+        createProjectLocalStorage();
+
+        return createItemHTML(item);
     })
 })();
+
+
+const createProjectLocalStorage = () => {
+    const LOCALSTOR = window.localStorage;
+    console.log(LOCALSTOR);
+
+    //name of project that user creates is the key name that is pushged to the localstorage object
+    //the value of the key value pair is the object array that is created for each project (list of items)
+    LOCALSTOR.arrayOne = itemListArr;
+    console.log(LOCALSTOR);
+}

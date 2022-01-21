@@ -6,9 +6,9 @@ const getDate = () => {
 }
 
 class ListItem {
-    constructor(name, notes, dateCreated) {
+    constructor(name, dateCreated) {
         this.name = name;
-        this.notes = notes;
+        this.notes = 'test';
         this.dateCreated = dateCreated
     }
     // get dateCreated () {
@@ -17,6 +17,7 @@ class ListItem {
 }
 
 export {
+    itemListArr,
     getDate,
     ListItem
 }
