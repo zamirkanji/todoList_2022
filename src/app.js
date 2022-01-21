@@ -16,6 +16,12 @@ class ListItem {
     // }
 }
 
+class DOMItem {
+    constructor(type) {
+        this.type = type;
+    }
+}
+
 export {
     itemListArr,
     getDate,

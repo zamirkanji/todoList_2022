@@ -5,6 +5,13 @@ import { mdiChevronDown } from '@mdi/js';
 // import delete from './img/delete.png';
 import { getDate, itemListArr, ListItem } from './app.js';
 
+const removeDisplayNone = (d) => {
+    return d.classList.remove('display');
+}
+
+const addDisplayNone = (d) => {
+    return d.classList.add('display');
+}
 
 const menuEventListener = (() => {
     const menuLogo = document.querySelector('.menu-icon');
@@ -15,20 +22,21 @@ const menuEventListener = (() => {
         mainSidebar.classList.toggle('display');
     })
 })();
+
 const newItemBtnListener = (() => {
     const newItemBtn = document.querySelector('#create-new-item-btn');
     const inputNewItem = document.querySelector('#input-new-item');
+    const labelNewItem = document.querySelector('.label-new-item');
     const submitBtn = document.querySelector('#submit-btn');
     newItemBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log('test');
-        inputNewItem.classList.toggle('display');
-        submitBtn.classList.toggle('display');
+        //remove display none from input form items
+        removeDisplayNone(inputNewItem);
+        removeDisplayNone(submitBtn);
+        removeDisplayNone(labelNewItem);
     })
-    submitBtn.onclick = (e) => {
-        // e.preventDefault();
-    }
 })();
+
 // const expandBtnListener = (() => {
 //     const expandIcon = document.querySelector('.expand-icon');
 //     const goShoppingItemTest = document.querySelector('#go-shopping');
@@ -56,45 +64,65 @@ const newItemBtnListener = (() => {
 // })();
 
 
-const testItem = new ListItem('z', "asdfasdf", getDate());
-console.log(testItem);
-
-const getValue = () => {
-    console.log('test');
-    const inputValue = document.querySelector('#input-new-item').value;
-    return console.log(inputValue);
-}
+// const testItem = new ListItem('z', "asdfasdf", getDate());
+// console.log(testItem);
 
 const createItemHTML = (i) => {
-    const orderedListNode = document.querySelector('.ordered-item-list');
-    
+    const orderedItemList = document.querySelector('.ordered-item-list');
+
+    //create item options container
+    const createNewItemOptionsContainer = document.createElement('div');
+    createNewItemOptionsContainer.classList.add('item-options-container');
+
+
+    //add DELETE Btn/Icon to item
+    const createItemDeleteBtn = document.createElement('div');
+    createItemDeleteBtn.classList.add('item-delete-btn');
+    const deleteBtn = document.createElement('button');
+    deleteBtn.id = 'delete-item';
+    const deleteIcon = document.createElement('div');
+    deleteIcon.id = 'delete-icon';
+    deleteBtn.appendChild(deleteIcon);
+    createItemDeleteBtn.appendChild(deleteBtn);
+
+    //add EXPAND Btn/Icon to item
+
+
+
+
+    createNewItemOptionsContainer.appendChild(createItemDeleteBtn);
+
     const lastItem = itemListArr[itemListArr.length - 1];
-    console.log(lastItem);
-    console.log(i, i.name);
+
     const newListItem = document.createElement('li');
     newListItem.classList.add('list-item');
     newListItem.classList.add('text');
-
     newListItem.textContent = i.name;
 
-    orderedListNode.appendChild(newListItem);
+    //add item options container
+    newListItem.appendChild(createNewItemOptionsContainer);
 
+    //add new list item to ordered list
+    orderedItemList.appendChild(newListItem);
+
+}
+
+const addListItemToArr = (i) => {
+    itemListArr.push(i);
+    console.log(itemListArr);    
 }
 
 const formSubmission = ((e)=> {
     const form = document.querySelector('.form-main');
-    
     form.addEventListener('submit', (e)=> {
         const inputValue = document.querySelector('#input-new-item').value;
         //remove form display
         e.preventDefault();
-        
+        //create new list item
         const item = new ListItem(`${inputValue}`, getDate());
-
-        itemListArr.push(item);
-        console.log(itemListArr);
-        createProjectLocalStorage();
-
+        //push item to array
+        addListItemToArr(item);
+        //create item in DOM
         return createItemHTML(item);
     })
 })();
