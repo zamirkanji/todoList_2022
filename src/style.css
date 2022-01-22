@@ -171,11 +171,11 @@ html {
 .list-container {
     flex: 2.25;
     margin: 0;
-    padding: 8px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     overflow: auto;
-    background-color: var(--dark-blue);
+    background-color: var(--middle-blue);
     border-radius: 5px;
     gap: 25px;
 }
@@ -237,7 +237,7 @@ html {
 /* *********************each item********************* */
 .list-item {
     margin: 0;
-    padding: 0 8px 0 8px;
+    padding: 0 10px 0 10px;
     /* list-style-type: none;
     text-decoration: none;
     list-style: none; */

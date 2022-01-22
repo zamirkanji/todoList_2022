@@ -37,6 +37,15 @@ const newItemBtnListener = (() => {
     })
 })();
 
+const deleteBtnListener = (() => {
+    const listItemDeleteBtn = document.querySelector('#delete-item');
+
+    //query selector all, THEN forEach or Map function to add event listener to all delete btns
+    listItemDeleteBtn.addEventListener('click', e => {
+        alert('Are you sure you want to delete this item?');
+    })
+})();
+
 // const expandBtnListener = (() => {
 //     const expandIcon = document.querySelector('.expand-icon');
 //     const goShoppingItemTest = document.querySelector('#go-shopping');
@@ -86,13 +95,18 @@ const createItemHTML = (i) => {
     createItemDeleteBtn.appendChild(deleteBtn);
 
     //add EXPAND Btn/Icon to item
+    const createExpandIconBtn = document.createElement('button');
+    createExpandIconBtn.classList.add('expand-icon-btn');
+    createExpandIconBtn.type = 'button';
+    createExpandIconBtn.name = 'expand-icon-btn';
+    const createExpandIconDiv = document.createElement('div');
+    createExpandIconDiv.classList.add('expand-icon');
+    createExpandIconBtn.appendChild(createExpandIconDiv);
 
-
-
-
+    //append icon, delete btn to list item
     createNewItemOptionsContainer.appendChild(createItemDeleteBtn);
+    createNewItemOptionsContainer.appendChild(createExpandIconBtn);
 
-    const lastItem = itemListArr[itemListArr.length - 1];
 
     const newListItem = document.createElement('li');
     newListItem.classList.add('list-item');
@@ -110,6 +124,7 @@ const createItemHTML = (i) => {
 const addListItemToArr = (i) => {
     itemListArr.push(i);
     console.log(itemListArr);    
+    const lastItem = itemListArr[itemListArr.length - 1];
 }
 
 const formSubmission = ((e)=> {
@@ -132,7 +147,7 @@ const createProjectLocalStorage = () => {
     const LOCALSTOR = window.localStorage;
     console.log(LOCALSTOR);
 
-    //name of project that user creates is the key name that is pushged to the localstorage object
+    //name of project that user creates is the key name that is pushed to the localstorage object
     //the value of the key value pair is the object array that is created for each project (list of items)
     LOCALSTOR.arrayOne = itemListArr;
     console.log(LOCALSTOR);
