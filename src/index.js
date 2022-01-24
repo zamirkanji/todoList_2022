@@ -1,7 +1,7 @@
 import './style.css';
 import menuIcon from './img/menu.png';
 import expand from './img/noun-expand-1181747.png';
-import { mdiChevronDown } from '@mdi/js';
+import { mdiChevronDown, mdiControllerClassic } from '@mdi/js';
 // import delete from './img/delete.png';
 import { getDate, itemListArr, ListItem } from './app.js';
 
@@ -38,11 +38,23 @@ const newItemBtnListener = (() => {
 })();
 
 const deleteBtnListener = (() => {
-    const listItemDeleteBtn = document.querySelector('#delete-item');
+    const listItemDeleteBtns = document.querySelectorAll('#delete-item');
+    console.log(listItemDeleteBtns);
 
     //query selector all, THEN forEach or Map function to add event listener to all delete btns
-    listItemDeleteBtn.addEventListener('click', e => {
-        alert('Are you sure you want to delete this item?');
+    // listItemDeleteBtns.addEventListener('click', e => {
+    //     alert('Are you sure you want to delete this item?');
+    // })
+    // console.log(listItemDeleteBtns.entries);
+    listItemDeleteBtns.forEach(btn => {
+        console.log(btn);
+        btn.addEventListener('click', e => {
+            const listItem = e.target.parentNode.parentNode.parentNode.parentNode;
+            const confirmAnswer = confirm('are you sure you want to delete this item?');
+            if (confirmAnswer) {
+                console.log(itemListArr);
+            } 
+        })
     })
 })();
 
@@ -125,6 +137,7 @@ const addListItemToArr = (i) => {
     itemListArr.push(i);
     console.log(itemListArr);    
     const lastItem = itemListArr[itemListArr.length - 1];
+    createProjectLocalStorage();
 }
 
 const formSubmission = ((e)=> {
@@ -149,6 +162,9 @@ const createProjectLocalStorage = () => {
 
     //name of project that user creates is the key name that is pushed to the localstorage object
     //the value of the key value pair is the object array that is created for each project (list of items)
-    LOCALSTOR.arrayOne = itemListArr;
+    // LOCALSTOR.arrayOne = itemListArr;
+    const testJSON = JSON.stringify(itemListArr);
+    console.log(testJSON);
+    localStorage.setItem(" ", " ");
     console.log(LOCALSTOR);
 }
