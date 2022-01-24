@@ -9,14 +9,18 @@ import createDefaultArrayList from './defaultProject';
 //     window.addEventListener('DOMContentLoaded', loadDefaultPage());
 // }
 
+
+//remove display (none) from element 
 const removeDisplayNone = (d) => {
     return d.classList.remove('display');
 }
 
+//add display (none) to element 
 const addDisplayNone = (d) => {
     return d.classList.add('display');
 }
 
+//event listener to open up side menu bar
 const menuEventListener = (() => {
     const menuLogo = document.querySelector('.menu-icon');
     const mainSidebar = document.querySelector('.main-sidebar');
@@ -42,7 +46,7 @@ const newItemBtnListener = (() => {
 })();
 
 
-
+//create item in HTML, add to DOM
 const createItemHTML = (n, dc) => {
     const orderedItemList = document.querySelector('.ordered-item-list');
 
@@ -90,6 +94,7 @@ const createItemHTML = (n, dc) => {
 
 }
 
+//event listener to delete item 
 const deleteBtnListener = () => {
     const listItemDeleteBtns = document.querySelectorAll('#delete-item');
     // console.log(listItemDeleteBtns);
@@ -101,12 +106,12 @@ const deleteBtnListener = () => {
     // console.log(listItemDeleteBtns.entries);
 
     for (let i = 0; i < listItemDeleteBtns.length; i++) {
-        console.log(i);
+        // console.log(i);
         const btnIndex = i;
     }
 
     for(let j = 0; j < itemListArr.length; j++) {
-        console.log(j);
+        // console.log(j);
         const listItemIndex = j; 
     }
 
@@ -168,8 +173,6 @@ loadDefaultPage();
 // const testItem = new ListItem('z', "asdfasdf", getDate());
 // console.log(testItem);
 
-
-
 const addListItemToArr = (i) => {
     itemListArr.push(i);
     console.log(itemListArr);    
@@ -193,12 +196,11 @@ const formSubmission = ((e)=> {
 })();
 
 
+//name of project that user creates is the key name that is pushed to the localstorage object
+//the value of the key value pair is the object array that is created for each project (list of items)
 const createProjectLocalStorage = () => {
     const LOCALSTOR = window.localStorage;
-    console.log(LOCALSTOR);
-
-    //name of project that user creates is the key name that is pushed to the localstorage object
-    //the value of the key value pair is the object array that is created for each project (list of items)
+    // console.log(LOCALSTOR);
     // LOCALSTOR.arrayOne = itemListArr;
     const testJSON = JSON.stringify(itemListArr);
     // console.log(testJSON);

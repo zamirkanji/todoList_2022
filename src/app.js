@@ -14,6 +14,9 @@ class ListItem {
     // get dateCreated () {
     //     return this.dateCreated;
     // }
+    getName() {
+        return this.name;
+    }
 }
 
 class DOMItem {
