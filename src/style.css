@@ -177,7 +177,7 @@ html {
     overflow: auto;
     background-color: var(--middle-blue);
     border-radius: 5px;
-    gap: 25px;
+    gap: 50px;
 }
 
 .ordered-item-list {

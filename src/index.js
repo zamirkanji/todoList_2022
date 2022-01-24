@@ -2,8 +2,12 @@ import './style.css';
 import menuIcon from './img/menu.png';
 import expand from './img/noun-expand-1181747.png';
 import { mdiChevronDown, mdiControllerClassic } from '@mdi/js';
-// import delete from './img/delete.png';
 import { getDate, itemListArr, ListItem } from './app.js';
+import createDefaultArrayList from './defaultProject';
+
+// const DOMLoaded = (() => {
+//     window.addEventListener('DOMContentLoaded', loadDefaultPage());
+// }
 
 const removeDisplayNone = (d) => {
     return d.classList.remove('display');
@@ -37,58 +41,9 @@ const newItemBtnListener = (() => {
     })
 })();
 
-const deleteBtnListener = (() => {
-    const listItemDeleteBtns = document.querySelectorAll('#delete-item');
-    console.log(listItemDeleteBtns);
-
-    //query selector all, THEN forEach or Map function to add event listener to all delete btns
-    // listItemDeleteBtns.addEventListener('click', e => {
-    //     alert('Are you sure you want to delete this item?');
-    // })
-    // console.log(listItemDeleteBtns.entries);
-    listItemDeleteBtns.forEach(btn => {
-        console.log(btn);
-        btn.addEventListener('click', e => {
-            const listItem = e.target.parentNode.parentNode.parentNode.parentNode;
-            const confirmAnswer = confirm('are you sure you want to delete this item?');
-            if (confirmAnswer) {
-                console.log(itemListArr);
-            } 
-        })
-    })
-})();
-
-// const expandBtnListener = (() => {
-//     const expandIcon = document.querySelector('.expand-icon');
-//     const goShoppingItemTest = document.querySelector('#go-shopping');
-//     const itemOptions = document.querySelector('.item-options-container');
-//     const itemText = document.querySelector('#item-text');
-//     expandIcon.addEventListener('click', (e) => {
-//         console.log(e, e.target);
-//         e.preventDefault();
-//         // goShoppingItemTest.classList.remove('list-item');
-//         goShoppingItemTest.classList.toggle('expand-container');
-//         // itemOptions.classList.toggle('expand-container');
-
-//         const itemwrapper = document.createElement('div');
-//         itemwrapper.classList.add('list-item');
-//         itemwrapper.appendChild(itemText);
-//         itemwrapper.appendChild(itemOptions);
-
-//         goShoppingItemTest.appendChild(itemwrapper);
-        
-
-//         const details = document.createElement('div');
-//         details.classList.add('details-container');
-//         goShoppingItemTest.appendChild(details);  
-//     })
-// })();
 
 
-// const testItem = new ListItem('z', "asdfasdf", getDate());
-// console.log(testItem);
-
-const createItemHTML = (i) => {
+const createItemHTML = (n, dc) => {
     const orderedItemList = document.querySelector('.ordered-item-list');
 
     //create item options container
@@ -123,7 +78,7 @@ const createItemHTML = (i) => {
     const newListItem = document.createElement('li');
     newListItem.classList.add('list-item');
     newListItem.classList.add('text');
-    newListItem.textContent = i.name;
+    newListItem.textContent = n;
 
     //add item options container
     newListItem.appendChild(createNewItemOptionsContainer);
@@ -131,7 +86,89 @@ const createItemHTML = (i) => {
     //add new list item to ordered list
     orderedItemList.appendChild(newListItem);
 
+    return deleteBtnListener();
+
 }
+
+const deleteBtnListener = () => {
+    const listItemDeleteBtns = document.querySelectorAll('#delete-item');
+    // console.log(listItemDeleteBtns);
+
+    //query selector all, THEN forEach or Map function to add event listener to all delete btns
+    // listItemDeleteBtns.addEventListener('click', e => {
+    //     alert('Are you sure you want to delete this item?');
+    // })
+    // console.log(listItemDeleteBtns.entries);
+
+    for (let i = 0; i < listItemDeleteBtns.length; i++) {
+        console.log(i);
+        const btnIndex = i;
+    }
+
+    for(let j = 0; j < itemListArr.length; j++) {
+        console.log(j);
+        const listItemIndex = j; 
+    }
+
+    listItemDeleteBtns.forEach(btn => {
+        btn.addEventListener('click', e => {
+            const listItem = e.target.parentNode.parentNode.parentNode.parentNode;
+            const confirmAnswer = confirm('are you sure you want to delete this item?');
+            if (confirmAnswer) {
+                listItem.remove();
+
+                // if (i === j) {
+                //     itemListArr.filter(l => {
+                //         !i;
+                //     })
+                // }
+            } 
+        })
+    })
+};
+
+const loadDefaultPage = () => {
+    const d = createDefaultArrayList();
+    d.forEach(obj => {
+        const n = obj.name;
+        const dc = obj.dateCreated;
+        createItemHTML(n, dc);
+    })
+}
+
+loadDefaultPage();
+
+// const expandBtnListener = (() => {
+//     const expandIcon = document.querySelector('.expand-icon');
+//     const goShoppingItemTest = document.querySelector('#go-shopping');
+//     const itemOptions = document.querySelector('.item-options-container');
+//     const itemText = document.querySelector('#item-text');
+//     expandIcon.addEventListener('click', (e) => {
+//         console.log(e, e.target);
+//         e.preventDefault();
+//         // goShoppingItemTest.classList.remove('list-item');
+//         goShoppingItemTest.classList.toggle('expand-container');
+//         // itemOptions.classList.toggle('expand-container');
+
+//         const itemwrapper = document.createElement('div');
+//         itemwrapper.classList.add('list-item');
+//         itemwrapper.appendChild(itemText);
+//         itemwrapper.appendChild(itemOptions);
+
+//         goShoppingItemTest.appendChild(itemwrapper);
+        
+
+//         const details = document.createElement('div');
+//         details.classList.add('details-container');
+//         goShoppingItemTest.appendChild(details);  
+//     })
+// })();
+
+
+// const testItem = new ListItem('z', "asdfasdf", getDate());
+// console.log(testItem);
+
+
 
 const addListItemToArr = (i) => {
     itemListArr.push(i);
@@ -164,7 +201,7 @@ const createProjectLocalStorage = () => {
     //the value of the key value pair is the object array that is created for each project (list of items)
     // LOCALSTOR.arrayOne = itemListArr;
     const testJSON = JSON.stringify(itemListArr);
-    console.log(testJSON);
+    // console.log(testJSON);
     localStorage.setItem(" ", " ");
-    console.log(LOCALSTOR);
+    // console.log(LOCALSTOR);
 }
