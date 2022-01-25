@@ -5,9 +5,12 @@ import { mdiChevronDown, mdiControllerClassic } from '@mdi/js';
 import { getDate, itemListArr, ListItem } from './app.js';
 import createDefaultArrayList from './defaultProject';
 
-// const DOMLoaded = (() => {
-//     window.addEventListener('DOMContentLoaded', loadDefaultPage());
-// }
+const DOMLoaded = (() => {
+    window.addEventListener('DOMContentLoaded', (e) => {
+        console.log('DOM content loaded');
+        loadDefaultPage();
+    });
+})()
 
 
 //remove display (none) from element 
@@ -19,32 +22,6 @@ const removeDisplayNone = (d) => {
 const addDisplayNone = (d) => {
     return d.classList.add('display');
 }
-
-//event listener to open up side menu bar
-const menuEventListener = (() => {
-    const menuLogo = document.querySelector('.menu-icon');
-    const mainSidebar = document.querySelector('.main-sidebar');
-    menuLogo.addEventListener('click', (e) => {
-        e.preventDefault();
-        console.log('test');
-        mainSidebar.classList.toggle('display');
-    })
-})();
-
-const newItemBtnListener = (() => {
-    const newItemBtn = document.querySelector('#create-new-item-btn');
-    const inputNewItem = document.querySelector('#input-new-item');
-    const labelNewItem = document.querySelector('.label-new-item');
-    const submitBtn = document.querySelector('#submit-btn');
-    newItemBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        //remove display none from input form items
-        removeDisplayNone(inputNewItem);
-        removeDisplayNone(submitBtn);
-        removeDisplayNone(labelNewItem);
-    })
-})();
-
 
 //create item in HTML, add to DOM
 const createItemHTML = (n, dc) => {
@@ -97,6 +74,7 @@ const createItemHTML = (n, dc) => {
 //event listener to delete item 
 const deleteBtnListener = () => {
     const listItemDeleteBtns = document.querySelectorAll('#delete-item');
+    const clearAllBtn = document.getElementById('clear-all-items-btn');
     // console.log(listItemDeleteBtns);
 
     //query selector all, THEN forEach or Map function to add event listener to all delete btns
@@ -115,6 +93,10 @@ const deleteBtnListener = () => {
         const listItemIndex = j; 
     }
 
+    clearAllBtn.addEventListener('click', () => {
+
+    })
+
     listItemDeleteBtns.forEach(btn => {
         btn.addEventListener('click', e => {
             const listItem = e.target.parentNode.parentNode.parentNode.parentNode;
@@ -132,6 +114,7 @@ const deleteBtnListener = () => {
     })
 };
 
+//load in default page (using defaultarraylist)
 const loadDefaultPage = () => {
     const d = createDefaultArrayList();
     d.forEach(obj => {
@@ -141,7 +124,49 @@ const loadDefaultPage = () => {
     })
 }
 
-loadDefaultPage();
+//listen for form submission to add each item 
+const formSubmission = ((e)=> {
+    const form = document.querySelector('.form-main');
+    form.addEventListener('submit', (e)=> {
+        const inputValue = document.querySelector('#input-new-item').value;
+        //remove form display
+        e.preventDefault();
+        //create new list item
+        const item = new ListItem(`${inputValue}`, getDate());
+        //get name and date from item
+        const n = item.getName();
+        const dc = item.dateCreated;
+        //pass name and date to add list item to arr
+        addListItemToArr(item);
+        //create item in DOM
+        return createItemHTML(n, dc);
+    })
+})();
+
+//event listener to open up side menu bar
+const menuEventListener = (() => {
+    const menuLogo = document.querySelector('.menu-icon');
+    const mainSidebar = document.querySelector('.main-sidebar');
+    menuLogo.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('test');
+        mainSidebar.classList.toggle('display');
+    })
+})();
+
+const newItemBtnListener = (() => {
+    const newItemBtn = document.querySelector('#create-new-item-btn');
+    const inputNewItem = document.querySelector('#input-new-item');
+    const labelNewItem = document.querySelector('.label-new-item');
+    const submitBtn = document.querySelector('#submit-btn');
+    newItemBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        //remove display none from input form items
+        removeDisplayNone(inputNewItem);
+        removeDisplayNone(submitBtn);
+        removeDisplayNone(labelNewItem);
+    })
+})();
 
 // const expandBtnListener = (() => {
 //     const expandIcon = document.querySelector('.expand-icon');
@@ -169,41 +194,28 @@ loadDefaultPage();
 //     })
 // })();
 
-
-// const testItem = new ListItem('z', "asdfasdf", getDate());
-// console.log(testItem);
+//add each list item to array and then call local storage 
 
 const addListItemToArr = (i) => {
     itemListArr.push(i);
     console.log(itemListArr);    
     const lastItem = itemListArr[itemListArr.length - 1];
-    createProjectLocalStorage();
+    createProjectLocalStorage(i);
+    // createItemHTML(i);
 }
 
-const formSubmission = ((e)=> {
-    const form = document.querySelector('.form-main');
-    form.addEventListener('submit', (e)=> {
-        const inputValue = document.querySelector('#input-new-item').value;
-        //remove form display
-        e.preventDefault();
-        //create new list item
-        const item = new ListItem(`${inputValue}`, getDate());
-        //push item to array
-        addListItemToArr(item);
-        //create item in DOM
-        return createItemHTML(item);
-    })
-})();
+
 
 
 //name of project that user creates is the key name that is pushed to the localstorage object
 //the value of the key value pair is the object array that is created for each project (list of items)
-const createProjectLocalStorage = () => {
+const createProjectLocalStorage = (i) => {
     const LOCALSTOR = window.localStorage;
+    const SESSIONSTOR = window.sessionStorage;
     // console.log(LOCALSTOR);
     // LOCALSTOR.arrayOne = itemListArr;
-    const testJSON = JSON.stringify(itemListArr);
-    // console.log(testJSON);
-    localStorage.setItem(" ", " ");
-    // console.log(LOCALSTOR);
+    // const testJSON = JSON.stringify(itemListArr);
+    // console.log(testJSON); 
+    LOCALSTOR.setItem('list_Item', JSON.stringify(i));
+    console.log(LOCALSTOR);
 }
