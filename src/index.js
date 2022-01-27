@@ -116,18 +116,19 @@ const deleteBtnListener = () => {
 };
 
 //load in default page (using defaultarraylist)
-const loadDefaultPage = () => {
-    const d = createDefaultArrayList();
-    d.forEach(obj => {
-        const n = obj.name;
-        const dc = obj.dateCreated;
-        createItemHTML(n, dc);
-    })
-}
+// const loadDefaultPage = () => {
+//     const d = createDefaultArrayList();
+//     d.forEach(obj => {
+//         const n = obj.name;
+//         const dc = obj.dateCreated;
+//         createItemHTML(n, dc);
+//     })
+// }
 
 
 
 //listen for form submission to add each item 
+
 const formSubmission = (e)=> {
     const form = document.querySelector('.form-main');
     form.addEventListener('submit', (e)=> {
@@ -136,7 +137,7 @@ const formSubmission = (e)=> {
         e.preventDefault();
         //create new list item
         const item = new ListItem(`${inputValue}`, getDate());
-        //get name and date from item
+        //get name and date from item (if needed)
         const n = item.getName();
         const dc = item.dateCreated;
         //pass name and date to add list item to arr
@@ -148,8 +149,6 @@ const formSubmission = (e)=> {
 
 //event listener to open up side menu bar
 const menuEventListener = (() => {
-  
-
     const menuLogo = document.querySelector('.menu-icon');
     const mainSidebar = document.querySelector('.main-sidebar');
     menuLogo.addEventListener('click', (e) => {
@@ -173,6 +172,11 @@ const newItemBtnListener = (() => {
         console.log(clickCount);
         e.preventDefault();
         //remove display none from input form items
+        if (clickCount === 1) {
+            //ask user to name new project
+            //wipe default list
+            //start new project with name given (key name in local storage obj)
+        }
         removeDisplayNone(inputNewItem);
         removeDisplayNone(submitBtn);
         removeDisplayNone(labelNewItem);
@@ -213,6 +217,7 @@ const addListItemToArr = (i) => {
     itemListArr.push(i);
     console.log(itemListArr);    
     const lastItem = itemListArr[itemListArr.length - 1];
+    // console.log(lastItem);
     createProjectLocalStorage(itemListArr, lastItem);
     // createItemHTML(i);
 }
@@ -227,14 +232,14 @@ const createProjectLocalStorage = (itemListArr, lastItem) => {
     const SESSIONSTOR = window.sessionStorage;
 
     LOCALSTOR.setItem('myProject', JSON.stringify(itemListArr));
-    console.log(LOCALSTOR);
+    // SESSIONSTOR.setItem('clickCount', clickCount);
+    // console.log(LOCALSTOR);
     console.log(LOCALSTOR.myProject);
     // localStorage.clear();
 
     const createItemFromLocalStorage = () => {
         // const d = createDefaultArrayList();
         const d = lastItem;
-        console.log(d);
         // d.forEach(obj => {
             const n = d.name;
             const dc = d.dateCreated;
