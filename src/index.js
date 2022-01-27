@@ -95,7 +95,16 @@ const deleteBtnListener = () => {
     }
 
     clearAllBtn.addEventListener('click', () => {
+        const ol = document.querySelector('.ordered-item-list');
+        const confirmDeleteAll = confirm('Would you like to clear all items?');
+        if (confirmDeleteAll) {
+            while (ol.firstChild) {
+                ol.removeChild(ol.firstChild);
+            }
+            //remove from arr/local storage
+        }
         //would you like to clear all items and start over or delete project
+        //delete all children under ordered item list 
     })
 
     listItemDeleteBtns.forEach(btn => {
@@ -125,8 +134,6 @@ const deleteBtnListener = () => {
 //     })
 // }
 
-
-
 //listen for form submission to add each item 
 
 const formSubmission = (e)=> {
@@ -144,6 +151,9 @@ const formSubmission = (e)=> {
         return addListItemToArr(item);
         //create item in DOM
         // return createItemHTML(n, dc);
+
+        //if listitemarr length > 0 push to end of arr
+        // if not, go straight t
     })
 };
 
@@ -176,6 +186,7 @@ const newItemBtnListener = (() => {
             //ask user to name new project
             //wipe default list
             //start new project with name given (key name in local storage obj)
+            const projectName = prompt('Please enter the name of your project');
         }
         removeDisplayNone(inputNewItem);
         removeDisplayNone(submitBtn);
@@ -214,6 +225,7 @@ const newItemBtnListener = (() => {
 //add each list item to array and then call local storage 
 
 const addListItemToArr = (i) => {
+    //instead of itemlistarr, use project array in local storage
     itemListArr.push(i);
     console.log(itemListArr);    
     const lastItem = itemListArr[itemListArr.length - 1];
@@ -232,8 +244,7 @@ const createProjectLocalStorage = (itemListArr, lastItem) => {
     const SESSIONSTOR = window.sessionStorage;
 
     LOCALSTOR.setItem('myProject', JSON.stringify(itemListArr));
-    // SESSIONSTOR.setItem('clickCount', clickCount);
-    // console.log(LOCALSTOR);
+    // SESSIONSTOR.setItem('clickCount', clickCount); //resets  when clear all AND new project is created
     console.log(LOCALSTOR.myProject);
     // localStorage.clear();
 
@@ -252,6 +263,7 @@ const createProjectLocalStorage = (itemListArr, lastItem) => {
 
 //JSON.parse item list arr, and create html element for each item in LOCAL storage 
 const loadSessionStoragePage = () => {
+    console.log(itemListArr); //array list is being reset every time page loads
     const d = window.localStorage.myProject;
     console.log(d);
     const i = JSON.parse(d);
