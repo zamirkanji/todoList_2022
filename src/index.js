@@ -8,7 +8,8 @@ import createDefaultArrayList from './defaultProject';
 const DOMLoaded = (() => {
     window.addEventListener('DOMContentLoaded', (e) => {
         console.log('DOM content loaded');
-        loadDefaultPage();
+        // loadDefaultPage();
+        loadSessionStoragePage();
     });
 })()
 
@@ -94,7 +95,7 @@ const deleteBtnListener = () => {
     }
 
     clearAllBtn.addEventListener('click', () => {
-
+        //would you like to clear all items and start over or delete project
     })
 
     listItemDeleteBtns.forEach(btn => {
@@ -124,8 +125,10 @@ const loadDefaultPage = () => {
     })
 }
 
+
+
 //listen for form submission to add each item 
-const formSubmission = ((e)=> {
+const formSubmission = (e)=> {
     const form = document.querySelector('.form-main');
     form.addEventListener('submit', (e)=> {
         const inputValue = document.querySelector('#input-new-item').value;
@@ -141,7 +144,7 @@ const formSubmission = ((e)=> {
         //create item in DOM
         // return createItemHTML(n, dc);
     })
-})();
+};
 
 //event listener to open up side menu bar
 const menuEventListener = (() => {
@@ -174,6 +177,8 @@ const newItemBtnListener = (() => {
         removeDisplayNone(submitBtn);
         removeDisplayNone(labelNewItem);
     })
+
+    return formSubmission();
 })();
 
 // const expandBtnListener = (() => {
@@ -208,7 +213,7 @@ const addListItemToArr = (i) => {
     itemListArr.push(i);
     console.log(itemListArr);    
     const lastItem = itemListArr[itemListArr.length - 1];
-    createProjectLocalStorage(itemListArr);
+    createProjectLocalStorage(itemListArr, lastItem);
     // createItemHTML(i);
 }
 
@@ -220,23 +225,35 @@ const addListItemToArr = (i) => {
 const createProjectLocalStorage = (itemListArr, lastItem) => {
     const LOCALSTOR = window.localStorage;
     const SESSIONSTOR = window.sessionStorage;
-    // console.log(LOCALSTOR);
-    // LOCALSTOR.arrayOne = itemListArr;
-    // const testJSON = JSON.stringify(itemListArr);
-    // console.log(testJSON); 
+
     LOCALSTOR.setItem('myProject', JSON.stringify(itemListArr));
     console.log(LOCALSTOR);
     console.log(LOCALSTOR.myProject);
     // localStorage.clear();
 
-    const createItemFromLocalStorage = (lastItem) => {
+    const createItemFromLocalStorage = () => {
         // const d = createDefaultArrayList();
         const d = lastItem;
         console.log(d);
-        d.forEach(obj => {
-            const n = obj.name;
-            const dc = obj.dateCreated;
+        // d.forEach(obj => {
+            const n = d.name;
+            const dc = d.dateCreated;
             createItemHTML(n, dc);
-        })
+        // })
     }
+    createItemFromLocalStorage();
+    return LOCALSTOR;
 }
+
+//JSON.parse item list arr, and create html element for each item in LOCAL storage 
+const loadSessionStoragePage = () => {
+    const d = window.localStorage.myProject;
+    console.log(d);
+    const i = JSON.parse(d);
+    i.forEach(obj => {
+        const n = obj.name;
+        const dc = obj.dateCreated;
+        createItemHTML(n, dc);
+    })
+}
+// loadSessionStoragePage();
