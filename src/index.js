@@ -56,7 +56,7 @@ const createItemHTML = (n, dc) => {
     createNewItemOptionsContainer.appendChild(createItemDeleteBtn);
     createNewItemOptionsContainer.appendChild(createExpandIconBtn);
 
-
+    //new list item 
     const newListItem = document.createElement('li');
     newListItem.classList.add('list-item');
     newListItem.classList.add('text');
@@ -148,7 +148,7 @@ const formSubmission = (e)=> {
         const n = item.getName();
         const dc = item.dateCreated;
         //pass name and date to add list item to arr
-        return addListItemToArr(item);
+        return addListItemToArr(item); 
         //create item in DOM
         // return createItemHTML(n, dc);
 
@@ -242,8 +242,9 @@ const addListItemToArr = (i) => {
 const createProjectLocalStorage = (itemListArr, lastItem) => {
     const LOCALSTOR = window.localStorage;
     const SESSIONSTOR = window.sessionStorage;
-
     LOCALSTOR.setItem('myProject', JSON.stringify(itemListArr));
+    console.log(lastItem);
+    // LOCALSTOR.myProject.push(JSON.stringify(lastItem));
     // SESSIONSTOR.setItem('clickCount', clickCount); //resets  when clear all AND new project is created
     console.log(LOCALSTOR.myProject);
     // localStorage.clear();
@@ -274,3 +275,7 @@ const loadSessionStoragePage = () => {
     })
 }
 // loadSessionStoragePage();
+
+//do i need a listitemarr
+//each list item could go directly to local storage (under each project array)
+//and that way on page reload, it wouldnt be updating a new listitem arr to replace the one in local storage 
