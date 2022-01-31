@@ -148,6 +148,12 @@ html {
     background-size: 100%;
 }
 
+#projectNameHeader {
+    color: white;
+    letter-spacing: 1px;
+    /* border: 1px solid white; */
+}
+
 #header-text {
     color: white;
     letter-spacing: 1px;
