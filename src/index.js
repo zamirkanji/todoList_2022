@@ -5,6 +5,8 @@ import { mdiChevronDown, mdiControllerClassic, mdiWindowShutter } from '@mdi/js'
 import { getDate, itemListArr, ListItem } from './app.js';
 import createDefaultArrayList from './defaultProject';
 
+const LOCAL = window.localStorage;
+
 const DOMLoaded = (() => {
     window.addEventListener('DOMContentLoaded', (e) => {
         console.log('DOM content loaded');
@@ -167,15 +169,31 @@ const formSubmission = (clickCount, projectName)=> {
         
 
         //if listitemarr length > 0 push to end of arr
-        if (itemListArr.length > 0 && itemListArr.length === 0) {
+        // if (itemListArr.length > 0 && itemListArr.length === 0) {
+        //     //add to current project array in local storage 
+        //     return addListItemToArr(item); 
+        // } else {
+        //     //wipe default project and 
+        //     // create new project and new item object in local storage
+        //     // return projectLocalStorage(projectName, item);
+        //     return createProjectLocalStorage(projectName, item);
+        // }
+
+
+        if (LOCAL.length > 0) {
             //add to current project array in local storage 
-            return addListItemToArr(item); 
+            // return addListItemToArr(item); 
+
+
+            return projectLocalStorage(item);
         } else {
             //wipe default project and 
             // create new project and new item object in local storage
             // return projectLocalStorage(projectName, item);
             return createProjectLocalStorage(projectName, item);
         }
+
+
         // if not, go straight to
         //pass name and date to add list item to arr
         //create item in DOM
