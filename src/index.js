@@ -216,6 +216,8 @@ const newItemBtnListener = (() => {
             projectName = prompt('Please enter the name of your project', 'myProject');
             //add new project name to top of page
             document.querySelector('#projectNameHeader').textContent = projectName;
+            //create new folder in current project list
+            createProjectFolder(projectName);
             //clear default array list 
             const ol = document.querySelector('.ordered-item-list');
                 if (true) {
@@ -305,11 +307,11 @@ const projectLocalStorage = (itemListArr, lastItem) => {
 const createProjectLocalStorage = (projectName, item) => {
     const LOCALSTOR = window.localStorage;
     const SESSIONSTOR = window.sessionStorage;
-    LOCALSTOR.setItem('myProject', JSON.stringify(itemListArr));
+    LOCALSTOR.setItem(`${projectName}`, JSON.stringify(item));
     // console.log(lastItem);
     // LOCALSTOR.myProject.push(JSON.stringify(lastItem));
     // SESSIONSTOR.setItem('clickCount', clickCount); //resets  when clear all AND new project is created
-    console.log(LOCALSTOR.myProject);
+    // console.log(LOCALSTOR.myProject);
     
 
     const createItemFromLocalStorage = () => {
@@ -326,9 +328,9 @@ const createProjectLocalStorage = (projectName, item) => {
 }
 
 //JSON.parse item list arr, and create html element for each item in LOCAL storage 
-const loadSessionStoragePage = () => {
+const loadSessionStoragePage = (projectName) => {
     console.log(itemListArr); //array list is being reset every time page loads
-    const d = window.localStorage.myProject;
+    const d = window.localStorage;
     console.log(d);
     const i = JSON.parse(d);
     i.forEach(obj => {
@@ -338,6 +340,15 @@ const loadSessionStoragePage = () => {
     })
 }
 // loadSessionStoragePage();
+
+const createProjectFolder = (projectName) => {
+    const currentP = document.querySelector('#current-p');
+    const newProj = document.createElement('li');
+    // newProj.classList.add('text');
+    newProj.classList.add('projectName');
+    newProj.textContent = projectName;
+    currentP.appendChild(newProj);
+}
 
 //do i need a listitemarr
 //each list item could go directly to local storage (under each project array)

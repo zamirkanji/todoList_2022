@@ -106,7 +106,13 @@ html {
 
 #current-p {
     background-color: var(--closetowhite);
-    height: 35px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.projectName {
+    color: white;
 }
 
 .sidebar-create-new-btn {
