@@ -11,13 +11,10 @@ const DOMLoaded = (() => {
     window.addEventListener('DOMContentLoaded', (e) => {
         console.log('DOM content loaded');
         // window.localStorage.clear();
+
         //if there is no current project in local storage, defualt page
-        if (window.localStorage.length === 0) {
-            loadDefaultPage();
-        } else {
-            //else, load current project 
-            loadSessionStoragePage();
-        }
+        //otherwise, load in project from local storage
+        window.localStorage.length === 0 ? loadDefaultPage() : loadSessionStoragePage();
     });
 })()
 
@@ -35,12 +32,9 @@ const addDisplayNone = (d) => {
 //create item in HTML, add to DOM
 const createItemHTML = (n, dc) => {
     const orderedItemList = document.querySelector('.ordered-item-list');
-
     //create item options container
     const createNewItemOptionsContainer = document.createElement('div');
     createNewItemOptionsContainer.classList.add('item-options-container');
-
-
     //add DELETE Btn/Icon to item
     const createItemDeleteBtn = document.createElement('div');
     createItemDeleteBtn.classList.add('item-delete-btn');
@@ -50,7 +44,6 @@ const createItemHTML = (n, dc) => {
     deleteIcon.id = 'delete-icon';
     deleteBtn.appendChild(deleteIcon);
     createItemDeleteBtn.appendChild(deleteBtn);
-
     //add EXPAND Btn/Icon to item
     const createExpandIconBtn = document.createElement('button');
     createExpandIconBtn.classList.add('expand-icon-btn');
@@ -59,32 +52,26 @@ const createItemHTML = (n, dc) => {
     const createExpandIconDiv = document.createElement('div');
     createExpandIconDiv.classList.add('expand-icon');
     createExpandIconBtn.appendChild(createExpandIconDiv);
-
     //append icon, delete btn to list item
     createNewItemOptionsContainer.appendChild(createItemDeleteBtn);
     createNewItemOptionsContainer.appendChild(createExpandIconBtn);
-
     //new list item 
     const newListItem = document.createElement('li');
     newListItem.classList.add('list-item');
     newListItem.classList.add('text');
     newListItem.textContent = n;
-
     //add item options container
     newListItem.appendChild(createNewItemOptionsContainer);
-
     //add new list item to ordered list
     orderedItemList.appendChild(newListItem);
-
+    //return delete btn, expand btn listener once item is created 
     return deleteBtnListener();
-
 }
 
 //event listener to delete item 
 const deleteBtnListener = () => {
     const listItemDeleteBtns = document.querySelectorAll('#delete-item');
     const clearAllBtn = document.getElementById('clear-all-items-btn');
-    // console.log(listItemDeleteBtns);
 
     //query selector all, THEN forEach or Map function to add event listener to all delete btns
     // listItemDeleteBtns.addEventListener('click', e => {
@@ -102,7 +89,6 @@ const deleteBtnListener = () => {
         const listItemIndex = j; 
     }
 
-    
     clearAllBtn.addEventListener('click', () => {
         const ol = document.querySelector('.ordered-item-list');
         const confirmDeleteAll = confirm('Would you like to clear all items?');
@@ -190,6 +176,7 @@ const formSubmission = (clickCount, projectName)=> {
             //wipe default project and 
             // create new project and new item object in local storage
             // return projectLocalStorage(projectName, item);
+            addClickCount(clickCount, projectName);
             return createProjectLocalStorage(projectName, item);
         }
 
@@ -366,6 +353,10 @@ const createProjectFolder = (projectName) => {
     newProj.classList.add('projectName');
     newProj.textContent = projectName;
     currentP.appendChild(newProj);
+}
+
+const addClickCount = (clickCount, projectName) => {
+    return window.sessionStorage.setItem(`${projectName}`, clickCount);
 }
 
 //do i need a listitemarr
