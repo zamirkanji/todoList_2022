@@ -6,11 +6,13 @@ import { getDate, itemListArr, ListItem } from './app.js';
 import createDefaultArrayList from './defaultProject';
 
 const LOCAL = window.localStorage;
+const SESSION = window.sessionStorage;
 
 const DOMLoaded = (() => {
     window.addEventListener('DOMContentLoaded', (e) => {
         console.log('DOM content loaded');
         // window.localStorage.clear();
+        // window.sessionStorage.clear();
 
         //if there is no current project in local storage, defualt page
         //otherwise, load in project from local storage
@@ -52,7 +54,19 @@ const createItemHTML = (n, dc) => {
     const createExpandIconDiv = document.createElement('div');
     createExpandIconDiv.classList.add('expand-icon');
     createExpandIconBtn.appendChild(createExpandIconDiv);
+    //add checkbox
+    const checkboxLabel = document.createElement('label');
+    checkboxLabel.for = 'item-checkbox';
+
+    const createCheckbox = document.createElement('input');
+    createCheckbox.id = 'item-checkbox';
+    createCheckbox.type = 'checkbox';
+    createCheckbox.name = 'item-checkbox';
+    //add important Icon
+
     //append icon, delete btn to list item
+    createNewItemOptionsContainer.appendChild(checkboxLabel);
+    checkboxLabel.appendChild(createCheckbox);
     createNewItemOptionsContainer.appendChild(createItemDeleteBtn);
     createNewItemOptionsContainer.appendChild(createExpandIconBtn);
     //new list item 
@@ -119,21 +133,13 @@ const deleteBtnListener = () => {
     })
 };
 
-// load in default page (using defaultarraylist)
-const loadDefaultPage = () => {
-    const d = createDefaultArrayList();
-    d.forEach(obj => {
-        const n = obj.name;
-        const dc = obj.dateCreated;
-        createItemHTML(n, dc);
-    })
-}
+
 
 //listen for form submission to add each item 
 
 const formSubmission = (clickCount, projectName)=> {
     const form = document.querySelector('.form-main');
-    console.log(projectName);
+    // console.log(projectName);
     form.addEventListener('submit', (e)=> {
         const inputValue = document.querySelector('#input-new-item').value;
         //remove form display
@@ -149,42 +155,19 @@ const formSubmission = (clickCount, projectName)=> {
         form.reset();
         //create new list item
         const item = new ListItem(`${inputValue}`, getDate());
-        //get name and date from item (if needed)
-        const n = item.getName();
-        const dc = item.dateCreated;
-        
-
-        //if listitemarr length > 0 push to end of arr
-        // if (itemListArr.length > 0 && itemListArr.length === 0) {
-        //     //add to current project array in local storage 
-        //     return addListItemToArr(item); 
-        // } else {
-        //     //wipe default project and 
-        //     // create new project and new item object in local storage
-        //     // return projectLocalStorage(projectName, item);
-        //     return createProjectLocalStorage(projectName, item);
-        // }
-
 
         if (LOCAL.length > 0) {
             //add to current project array in local storage 
             // return addListItemToArr(item); 
-
-
-            return projectLocalStorage(item);
+            addClickCount(clickCount, projectName);
+            return projectLocalStorage(projectName, item, clickCount);
         } else {
             //wipe default project and 
             // create new project and new item object in local storage
             // return projectLocalStorage(projectName, item);
-            addClickCount(clickCount, projectName);
+            
             return createProjectLocalStorage(projectName, item);
         }
-
-
-        // if not, go straight to
-        //pass name and date to add list item to arr
-        //create item in DOM
-        // return createItemHTML(n, dc);
     })
 };
 
@@ -285,28 +268,51 @@ const addListItemToArr = (i) => {
 
 //name of project that user creates is the key name that is pushed to the localstorage object
 //the value of the key value pair is the object array that is created for each project (list of items)
-const projectLocalStorage = (itemListArr, lastItem) => {
+const projectLocalStorage = (projectName, item, clickCount) => {
+    //FIND PROJECT NAME AND PUSH LAST ITEM INTO IT 
     const LOCALSTOR = window.localStorage;
     const SESSIONSTOR = window.sessionStorage;
-    LOCALSTOR.setItem('myProject', JSON.stringify(itemListArr));
-    console.log(lastItem);
+    // LOCALSTOR.setItem('myProject', JSON.stringify(itemListArr));
+    console.log(JSON.parse(item));
     // LOCALSTOR.myProject.push(JSON.stringify(lastItem));
     // SESSIONSTOR.setItem('clickCount', clickCount); //resets  when clear all AND new project is created
-    console.log(LOCALSTOR.myProject);
+    // console.log(LOCALSTOR.myProject);
+
+    
     
 
     const createItemFromLocalStorage = () => {
         // const d = createDefaultArrayList();
-        const d = lastItem;
+        const d = item;
         // d.forEach(obj => {
             const n = d.name;
             const dc = d.dateCreated;
             createItemHTML(n, dc);
         // })
     }
-    createItemFromLocalStorage();
+
+    if (LOCAL.length > 0) {
+        //add to current project array in local storage 
+        // return addListItemToArr(item); 
+        
+        return projectLocalStorage(projectName, item, clickCount);
+        createItemFromLocalStorage();
+    } else {
+        addClickCount(clickCount, projectName);
+        LOCALSTOR.setItem(`${projectName}`, JSON.stringify(item));
+        createItemFromLocalStorage()
+    }
+    
     return LOCALSTOR;
 }
+
+
+
+
+
+
+
+
 
 
 const createProjectLocalStorage = (projectName, item) => {
@@ -332,19 +338,25 @@ const createProjectLocalStorage = (projectName, item) => {
     return LOCALSTOR;
 }
 
+
+
+
+
+
+
 //JSON.parse item list arr, and create html element for each item in LOCAL storage 
 const loadSessionStoragePage = (projectName) => {
-    console.log(itemListArr); //array list is being reset every time page loads
-    const d = window.localStorage;
-    console.log(d);
-    const i = JSON.parse(d);
+    // console.log(itemListArr); //array list is being reset every time page loads
+    // const d = window.localStorage;
+    // console.log(d);
+    const i = JSON.parse(LOCAL);
+    console.log(i);
     i.forEach(obj => {
         const n = obj.name;
         const dc = obj.dateCreated;
         createItemHTML(n, dc);
     })
 }
-// loadSessionStoragePage();
 
 const createProjectFolder = (projectName) => {
     const currentP = document.querySelector('#current-p');
@@ -356,7 +368,24 @@ const createProjectFolder = (projectName) => {
 }
 
 const addClickCount = (clickCount, projectName) => {
+    //if project name already exists inside storage, push
+    //otherwise create
+    console.log(SESSION);
+    let data = SESSION.getItem(projectName);
+    if (data) {
+        console.log(SESSION.getItem(projectName));
+    }
     return window.sessionStorage.setItem(`${projectName}`, clickCount);
+}
+
+// load in default page (using defaultarraylist)
+const loadDefaultPage = () => {
+    const d = createDefaultArrayList();
+    d.forEach(obj => {
+        const n = obj.name;
+        const dc = obj.dateCreated;
+        createItemHTML(n, dc);
+    })
 }
 
 //do i need a listitemarr
