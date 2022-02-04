@@ -300,7 +300,7 @@ const projectLocalStorage = (projectName, item, clickCount) => {
     } else {
         addClickCount(clickCount, projectName);
         LOCALSTOR.setItem(`${projectName}`, JSON.stringify(item));
-        createItemFromLocalStorage()
+        createItemFromLocalStorage();
     }
     
     return LOCALSTOR;
@@ -314,7 +314,7 @@ const projectLocalStorage = (projectName, item, clickCount) => {
 
 
 
-
+//trying to remove this 
 const createProjectLocalStorage = (projectName, item) => {
     const LOCALSTOR = window.localStorage;
     const SESSIONSTOR = window.sessionStorage;
@@ -337,11 +337,6 @@ const createProjectLocalStorage = (projectName, item) => {
     createItemFromLocalStorage();
     return LOCALSTOR;
 }
-
-
-
-
-
 
 
 //JSON.parse item list arr, and create html element for each item in LOCAL storage 
