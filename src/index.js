@@ -16,6 +16,9 @@ const DOMLoaded = (() => {
 
         //if there is no current project in local storage, defualt page
         //otherwise, load in project from local storage
+
+
+        //check for projectName from sidetab (whatever project is highlighted)
         window.localStorage.length === 0 ? loadDefaultPage() : loadSessionStoragePage();
     });
 })();
@@ -75,6 +78,9 @@ const createItemHTML = (n, dc) => {
     newListItem.appendChild(createNewItemOptionsContainer);
     //add new list item to ordered list
     orderedItemList.appendChild(newListItem);
+
+    //log storage
+    console.log(LOCAL);
     //return delete btn, expand btn listener once item is created 
     return () => {
         const a = deleteBtnListener();
@@ -210,12 +216,32 @@ const newItemBtnListener = (() => {
     const labelNewItem = document.querySelector('.label-new-item');
     const submitBtn = document.querySelector('#submit-btn');
     newItemBtn.addEventListener('click', (e) => {
-        clickCount++;
-        console.log(clickCount);
+        
         e.preventDefault();
         //remove display none from input form items
         let projectName;
-        if (clickCount === 1) {
+        const projectExists = checkLocalStorage();
+        // if (clickCount === 1) {
+        //     //ask user to name new project
+        //     //wipe default list
+        //     //start new project with name given (key name in local storage obj)
+        //     projectName = prompt('Please enter the name of your project', 'myProject');
+        //     //add new project name to top of page
+        //     document.querySelector('#projectNameHeader').textContent = projectName;
+        //     //create new folder in current project list
+        //     createProjectFolder(projectName);
+        //     //clear default array list 
+        //     const ol = document.querySelector('.ordered-item-list');
+        //     const d = deleteChildElements(ol);
+        //     d();
+        // }
+        if (projectExists) {
+            let getClickCount = SESSION.getItem('hello');
+            getClickCount++;
+            console.log(getClickCount);
+        } else {
+            clickCount++;
+            console.log(clickCount);
             //ask user to name new project
             //wipe default list
             //start new project with name given (key name in local storage obj)
@@ -229,6 +255,7 @@ const newItemBtnListener = (() => {
             const d = deleteChildElements(ol);
             d();
         }
+    
         removeDisplayNone(inputNewItem);
         removeDisplayNone(submitBtn);
         removeDisplayNone(labelNewItem);
@@ -253,6 +280,7 @@ const deleteChildElements = (parentEl) => {
 
 //the value of the key value pair is the object array that is created for each project (list of items)
 const projectLocalStorage = (clickCount, projectName, item) => {
+    const localStorageItemList = [];
     //FIND PROJECT NAME AND PUSH LAST ITEM INTO IT 
 
     // LOCALSTOR.setItem('myProject', JSON.stringify(itemListArr));
@@ -285,22 +313,28 @@ const projectLocalStorage = (clickCount, projectName, item) => {
     const createItemFromLocalStorage = (item) => {
         // const d = createDefaultArrayList();
         const d = item;
-        // d.forEach(obj => {
             const n = d.name;
             const dc = d.dateCreated;
-            createItemHTML(n, dc);
-        // })
+            return createItemHTML(n, dc);
     }
     
     if (projectExists) {
+        console.log(item);
         //add to current project array in local storage 
         // return addListItemToArr(item); 
+        // const proj = LOCAL.getItem(`${projectName}`);
+        let proj = JSON.parse(LOCAL.getItem('hello'));
+        // JSON.parse(proj);
+        console.log(proj);
         
-        createItemFromLocalStorage(projectName);
-        return projectLocalStorage(projectName, item, clickCount);
+        proj.push(item);
+        
+        createItemFromLocalStorage(item);
+        // return projectLocalStorage(projectName, item, clickCount);
     } else {
         addClickCount(clickCount, projectName);
-        LOCAL.setItem(`${projectName}`, [JSON.stringify(item)]);
+        
+        LOCAL.setItem(`${projectName}`, JSON.stringify([item]));
         createItemFromLocalStorage(item);
     }
     
@@ -313,7 +347,11 @@ const loadSessionStoragePage = (projectName) => {
     // console.log(itemListArr); //array list is being reset every time page loads
     // const d = window.localStorage;
     // console.log(d);
-    const i = JSON.parse(LOCAL[`${projectName}`]);
+    // let proj = LOCAL.getItem(`${projectName}`);
+    // console.log(projectName);
+    // const i = LOCAL.getItem(`${projectName}`);
+    let i = LOCAL.getItem(`hello`);
+    i = JSON.parse(i);
     console.log(i);
     i.forEach(obj => {
         const n = obj.name;
@@ -334,11 +372,11 @@ const createProjectFolder = (projectName) => {
 const addClickCount = (clickCount, projectName) => {
     //if project name already exists inside storage, push
     //otherwise create
-    console.log(SESSION);
     let data = SESSION.getItem(projectName);
     if (data) {
         console.log(SESSION.getItem(projectName));
     }
+    console.log(SESSION);
     return window.sessionStorage.setItem(`${projectName}`, clickCount);
 }
 // load in default page (using defaultarraylist)
