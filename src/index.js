@@ -221,20 +221,6 @@ const newItemBtnListener = (() => {
         //remove display none from input form items
         let projectName;
         const projectExists = checkLocalStorage();
-        // if (clickCount === 1) {
-        //     //ask user to name new project
-        //     //wipe default list
-        //     //start new project with name given (key name in local storage obj)
-        //     projectName = prompt('Please enter the name of your project', 'myProject');
-        //     //add new project name to top of page
-        //     document.querySelector('#projectNameHeader').textContent = projectName;
-        //     //create new folder in current project list
-        //     createProjectFolder(projectName);
-        //     //clear default array list 
-        //     const ol = document.querySelector('.ordered-item-list');
-        //     const d = deleteChildElements(ol);
-        //     d();
-        // }
         if (projectExists) {
             let getClickCount = SESSION.getItem('hello');
             getClickCount++;
