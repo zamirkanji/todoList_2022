@@ -33,7 +33,7 @@ const addDisplayNone = (d) => {
 }
 
 //create item in HTML, add to DOM
-const createItemHTML = (n, dc) => {
+const createItemHTML = (n, dc, projectName) => {
     const orderedItemList = document.querySelector('.ordered-item-list');
     //create item options container
     const createNewItemOptionsContainer = document.createElement('div');
@@ -94,7 +94,7 @@ const createItemHTML = (n, dc) => {
     //return delete btn, expand btn listener once item is created 
     return () => {
         console.log('test');
-        const a = deleteBtnListener();
+        const a = deleteBtnListener(projectName);
         const b = expandBtnListener();
         // const c = itemEditable();
         return a && b;
@@ -116,7 +116,8 @@ const itemEditable = () => {
 }
 
 //event listener to delete item (called after item is created)
-const deleteBtnListener = () => {
+const deleteBtnListener = (projectName) => {
+    console.log(projectName);
     const listItemDeleteBtns = document.querySelectorAll('#delete-item');
     const clearAllBtn = document.getElementById('clear-all-items-btn');
 
@@ -145,9 +146,12 @@ const deleteBtnListener = () => {
                 ol.removeChild(ol.firstChild);
             }
             //remove from arr/local storage
+            console.log(projectName);
+            LOCAL.removeItem(projectName);
         }
         //would you like to clear all items and start over or delete project
         //delete all children under ordered item list 
+        
     })
 
     listItemDeleteBtns.forEach(btn => {
@@ -195,11 +199,11 @@ const expandBtnListener = () => {
 };
 
 //get name and date from items and call createItemHTML()
-const getNameAndDate = (arr) => {
+const getNameAndDate = (arr, projectName) => {
     arr.forEach(obj => {
         const n = obj.name;
         const dc = obj.dateCreated;
-        const createItem = createItemHTML(n, dc);
+        const createItem = createItemHTML(n, dc, projectName);
         return createItem();
     })
 }
@@ -254,7 +258,7 @@ const newItemBtnListener = (() => {
     const inputNewItem = document.querySelector('#input-new-item');
     const labelNewItem = document.querySelector('.label-new-item');
     const submitBtn = document.querySelector('#submit-btn');
-    
+
     newItemBtn.addEventListener('click', (e) => {
         
         e.preventDefault();
@@ -325,12 +329,12 @@ const projectLocalStorage = (clickCount, projectName, item) => {
     const projectExists = checkLocalStorage();
     console.log(projectExists);
 
-    const createItemFromLocalStorage = (item) => {
+    const createItemFromLocalStorage = (item, projectName) => {
         // const d = createDefaultArrayList();
         const d = item;
             const n = d.name;
             const dc = d.dateCreated;
-            return createItemHTML(n, dc);
+            return createItemHTML(n, dc, projectName);
     }
     
     if (projectExists) {
@@ -345,13 +349,13 @@ const projectLocalStorage = (clickCount, projectName, item) => {
         console.log(Array.isArray(proj));
         proj.push(JSON.stringify(item));
         
-        createItemFromLocalStorage(item);
+        createItemFromLocalStorage(item, projectName);
         // return projectLocalStorage(projectName, item, clickCount);
     } else {
         addClickCount(clickCount, projectName);
         
         LOCAL.setItem(`${projectName}`, JSON.stringify([item]));
-        createItemFromLocalStorage(item);
+        createItemFromLocalStorage(item, projectName);
     }
     
     
@@ -359,15 +363,15 @@ const projectLocalStorage = (clickCount, projectName, item) => {
 }
 
 //JSON.parse item list arr, and create html element for each item in LOCAL storage 
-const loadSessionStoragePage = (projName) => {
-    document.querySelector('#projectNameHeader').textContent = projName;
+const loadSessionStoragePage = (projectName) => {
+    document.querySelector('#projectNameHeader').textContent = projectName;
     //create folder in sidebar on page load
     //will need to show all projects in sidebar
-    createProjectFolder(projName);
+    createProjectFolder(projectName);
 
-    let i = LOCAL.getItem(`${projName}`);
+    let i = LOCAL.getItem(`${projectName}`);
     i = JSON.parse(i);
-    return getNameAndDate(i);
+    return getNameAndDate(i, projectName);
 }
 
 //create project folder in sidebar when new project is created
