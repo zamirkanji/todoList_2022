@@ -24,6 +24,7 @@ html {
 .text {
     color: var(--closetowhite);
     /* color: whitesmoke; */
+    /* text-align: center; */
 }
 
 .main-content {
@@ -144,8 +145,8 @@ html {
 }
 
 .menu-icon{
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
 }
 #menu-icon {
     background-image: url('./img/menu.png');
@@ -249,39 +250,50 @@ html {
 /* *********************each item********************* */
 .list-item {
     margin: 0;
-    padding: 0 10px 0 10px;
+    padding: 0 0 0 10px;
     /* list-style-type: none;
     text-decoration: none;
     list-style: none; */
-    background-color: var(--closetowhite);
-    height: 50px;
-    color: black;
+    /* background-color: var(--closetowhite); */
+    background-color: var(--black-color);
+    height: 45px;
+    color: white;
     letter-spacing: 1px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
     border-radius: 5px;
-    font-size: 100%;
+    
+    /* align-items: center; */
+    /* justify-content: space-between; */
+    /* font-size: 100%; */
+    /* flex: 1.75; */
 }
 
-/* #item-text {
-    list-style-type: decimal;
-    background-color: var(--dark-blue);
-} */
+.item-text {
+    margin: 0;
+    padding: 0;
+    color: white;
+    flex: 1.75;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
 
 .item-options-container {
+    flex: .3;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0;
-    padding: 0;
-    width: 15%;
-    height: 100%;
+    padding: 10px;
+    /* height: 100%; */
+    gap: 5px;
+    background-color: var(--closetowhite);
+    border-radius: 0 5px 5px 0;
 }
 
 #item-checkbox {
     flex: 1;
-    border-radius: 50px;
+    /* border-radius: 50px; */
 }
 
 .item-delete-btn {

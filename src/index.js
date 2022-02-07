@@ -1,7 +1,7 @@
 import './style.css';
 import menuIcon from './img/menu.png';
 import expand from './img/noun-expand-1181747.png';
-import { mdiChevronDown, mdiControllerClassic, mdiWindowShutter } from '@mdi/js';
+import { mdiChevronDown, mdiConsoleLine, mdiControllerClassic, mdiWindowShutter } from '@mdi/js';
 import { getDate, itemListArr, ListItem } from './app.js';
 import createDefaultArrayList from './defaultProject';
 
@@ -14,22 +14,24 @@ const DOMLoaded = (() => {
         // window.localStorage.clear();
         // window.sessionStorage.clear();
 
-        //if there is no current project in local storage, defualt page
-        //otherwise, load in project from local storage
-
+        //get currentl, latest project from local storage and pass in projectname to loadsession
+        let projName = LOCAL.key(0);
 
         //check for projectName from sidetab (whatever project is highlighted)
-        window.localStorage.length === 0 ? loadDefaultPage() : loadSessionStoragePage();
+        window.localStorage.length === 0 ? loadDefaultPage() : loadSessionStoragePage(projName);
     });
 })();
+
 //remove display (none) from element 
 const removeDisplayNone = (d) => {
     return d.classList.remove('display');
 }
+
 //add display (none) to element 
 const addDisplayNone = (d) => {
     return d.classList.add('display');
 }
+
 //create item in HTML, add to DOM
 const createItemHTML = (n, dc) => {
     const orderedItemList = document.querySelector('.ordered-item-list');
@@ -58,6 +60,7 @@ const createItemHTML = (n, dc) => {
     //add checkbox
     const checkboxLabel = document.createElement('label');
     checkboxLabel.for = 'item-checkbox';
+    checkboxLabel.id = 'item-checkbox';
     const createCheckbox = document.createElement('input');
     createCheckbox.id = 'item-checkbox';
     createCheckbox.type = 'checkbox';
@@ -71,24 +74,47 @@ const createItemHTML = (n, dc) => {
     createNewItemOptionsContainer.appendChild(createExpandIconBtn);
     //new list item 
     const newListItem = document.createElement('li');
+    const span = document.createElement('span');
+    newListItem.appendChild(span);
     newListItem.classList.add('list-item');
-    newListItem.classList.add('text');
-    newListItem.textContent = n;
+    span.classList.add('item-text');
+    span.classList.add('text');
+    span.textContent = n;
+
+
+    
     //add item options container
     newListItem.appendChild(createNewItemOptionsContainer);
     //add new list item to ordered list
     orderedItemList.appendChild(newListItem);
 
     //log storage
-    console.log(LOCAL);
+    // console.log(LOCAL);
+
     //return delete btn, expand btn listener once item is created 
     return () => {
+        console.log('test');
         const a = deleteBtnListener();
         const b = expandBtnListener();
-        // const c = expandBtnListener();
+        // const c = itemEditable();
         return a && b;
     }
 }
+
+//make item editable
+const itemEditable = () => {
+    const item = document.querySelector('.item-text');
+    item.contentEditable = true;
+    item.addEventListener('dblclick', () => {
+        if (contentEditable) {
+            console.log('item being edited');
+            //remove span
+            //create input
+            //
+        }
+    })
+}
+
 //event listener to delete item (called after item is created)
 const deleteBtnListener = () => {
     const listItemDeleteBtns = document.querySelectorAll('#delete-item');
@@ -111,6 +137,7 @@ const deleteBtnListener = () => {
     }
 
     clearAllBtn.addEventListener('click', () => {
+        console.log('delete btn clicked');
         const ol = document.querySelector('.ordered-item-list');
         const confirmDeleteAll = confirm('Would you like to clear all items?');
         if (confirmDeleteAll) {
@@ -139,6 +166,7 @@ const deleteBtnListener = () => {
         })
     })
 };
+
 //expand btn listener (called after item is created)
 const expandBtnListener = () => {
     const expandIcon = document.querySelector('.expand-icon');
@@ -166,6 +194,16 @@ const expandBtnListener = () => {
     })
 };
 
+//get name and date from items and call createItemHTML()
+const getNameAndDate = (arr) => {
+    arr.forEach(obj => {
+        const n = obj.name;
+        const dc = obj.dateCreated;
+        const createItem = createItemHTML(n, dc);
+        return createItem();
+    })
+}
+
 //listen for form submission to add each item 
 const formSubmission = (clickCount, projectName)=> {
     const form = document.querySelector('.form-main');
@@ -188,6 +226,7 @@ const formSubmission = (clickCount, projectName)=> {
         return projectLocalStorage(clickCount, projectName, item);
     })
 };
+
 //check local storage to see if project already exists
 const checkLocalStorage = (clickCount, projectName, item) => {
     const projectExists = LOCAL.length > 0;
@@ -215,6 +254,7 @@ const newItemBtnListener = (() => {
     const inputNewItem = document.querySelector('#input-new-item');
     const labelNewItem = document.querySelector('.label-new-item');
     const submitBtn = document.querySelector('#submit-btn');
+    
     newItemBtn.addEventListener('click', (e) => {
         
         e.preventDefault();
@@ -240,6 +280,8 @@ const newItemBtnListener = (() => {
             const ol = document.querySelector('.ordered-item-list');
             const d = deleteChildElements(ol);
             d();
+
+            addClickCount(clickCount, projectName);
         }
     
         removeDisplayNone(inputNewItem);
@@ -280,19 +322,6 @@ const projectLocalStorage = (clickCount, projectName, item) => {
     // SESSIONSTOR.setItem('clickCount', clickCount); //resets  when clear all AND new project is created
     // console.log(LOCALSTOR.myProject);
 
-     // if (LOCAL.length > 0) {
-    //     //add to current project array in local storage 
-    //     // return addListItemToArr(item); 
-        
-    //     return projectLocalStorage(projectName, item, clickCount);
-    // } else {
-    //     //wipe default project and 
-    //     // create new project and new item object in local storage
-    //     // return projectLocalStorage(projectName, item);
-    //     addClickCount(clickCount, projectName);
-    //     return createProjectLocalStorage(projectName, item);
-    // }
-
     const projectExists = checkLocalStorage();
     console.log(projectExists);
 
@@ -312,8 +341,9 @@ const projectLocalStorage = (clickCount, projectName, item) => {
         let proj = JSON.parse(LOCAL.getItem('hello'));
         // JSON.parse(proj);
         console.log(proj);
-        
-        proj.push(item);
+        console.log(item);
+        console.log(Array.isArray(proj));
+        proj.push(JSON.stringify(item));
         
         createItemFromLocalStorage(item);
         // return projectLocalStorage(projectName, item, clickCount);
@@ -329,22 +359,17 @@ const projectLocalStorage = (clickCount, projectName, item) => {
 }
 
 //JSON.parse item list arr, and create html element for each item in LOCAL storage 
-const loadSessionStoragePage = (projectName) => {
-    // console.log(itemListArr); //array list is being reset every time page loads
-    // const d = window.localStorage;
-    // console.log(d);
-    // let proj = LOCAL.getItem(`${projectName}`);
-    // console.log(projectName);
-    // const i = LOCAL.getItem(`${projectName}`);
-    let i = LOCAL.getItem(`hello`);
+const loadSessionStoragePage = (projName) => {
+    document.querySelector('#projectNameHeader').textContent = projName;
+    //create folder in sidebar on page load
+    //will need to show all projects in sidebar
+    createProjectFolder(projName);
+
+    let i = LOCAL.getItem(`${projName}`);
     i = JSON.parse(i);
-    console.log(i);
-    i.forEach(obj => {
-        const n = obj.name;
-        const dc = obj.dateCreated;
-        createItemHTML(n, dc);
-    })
+    return getNameAndDate(i);
 }
+
 //create project folder in sidebar when new project is created
 const createProjectFolder = (projectName) => {
     const currentP = document.querySelector('#current-p');
@@ -354,6 +379,7 @@ const createProjectFolder = (projectName) => {
     newProj.textContent = projectName;
     currentP.appendChild(newProj);
 }
+
 //add click count to session storage to track
 const addClickCount = (clickCount, projectName) => {
     //if project name already exists inside storage, push
@@ -365,12 +391,9 @@ const addClickCount = (clickCount, projectName) => {
     console.log(SESSION);
     return window.sessionStorage.setItem(`${projectName}`, clickCount);
 }
+
 // load in default page (using defaultarraylist)
 const loadDefaultPage = () => {
     const d = createDefaultArrayList();
-    d.forEach(obj => {
-        const n = obj.name;
-        const dc = obj.dateCreated;
-        createItemHTML(n, dc);
-    })
+    return getNameAndDate(d);
 }
