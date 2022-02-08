@@ -20,7 +20,7 @@ const clearStorage = () => {
 }
 
 const clearAllStorage = clearStorage();
-// clearAllStorage();
+clearAllStorage();
 
 
 //remove display (none) from element 
