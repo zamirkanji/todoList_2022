@@ -1,27 +1,27 @@
 import './style.css';
+import DOMLoaded from './loadPage';
 import menuIcon from './img/menu.png';
 import expand from './img/noun-expand-1181747.png';
 import { mdiChevronDown, mdiConsoleLine, mdiControllerClassic, mdiWindowShutter } from '@mdi/js';
 import { getDate, itemListArr, ListItem } from './app.js';
 import createDefaultArrayList from './defaultProject';
 import createItemHTML from './DOM';
+import { deleteBtnListener, expandBtnListener } from './btnListeners';
 
 const LOCAL = window.localStorage;
 const SESSION = window.sessionStorage;
 
-//LOAD PAGE
-const DOMLoaded = (() => {
-    window.addEventListener('DOMContentLoaded', (e) => {
-        // window.localStorage.clear();
-        // window.sessionStorage.clear();
+const clearStorage = () => {
+    return () => {
+        window.localStorage.clear();
+        window.sessionStorage.clear();
+    }
+    
+}
 
-        //get currentl, latest project from local storage and pass in projectname to loadsession
-        let projName = LOCAL.key(0);
+const clearAllStorage = clearStorage();
+// clearAllStorage();
 
-        //check for projectName from sidetab (whatever project is highlighted)
-        window.localStorage.length === 0 ? loadDefaultPage() : loadSessionStoragePage(projName);
-    });
-})();
 
 //remove display (none) from element 
 const removeDisplayNone = (d) => {
@@ -46,95 +46,6 @@ const itemEditable = () => {
         }
     })
 }
-
-//event listener to delete item (called after item is created)
-const deleteBtnListener = (projectName) => {
-    console.log(projectName);
-    const orderedList = document.querySelector('.ordered-item-list');
-    const listItemDeleteBtns = document.querySelectorAll('#delete-item');
-    const clearAllBtn = document.getElementById('clear-all-items-btn');
-
-    //query selector all, THEN forEach or Map function to add event listener to all delete btns
-    // listItemDeleteBtns.addEventListener('click', e => {
-    //     alert('Are you sure you want to delete this item?');
-    // })
-    // console.log(listItemDeleteBtns.entries);
-
-    for (let i = 0; i < listItemDeleteBtns.length; i++) {
-        // console.log(i);
-        const btnIndex = i;
-    }
-
-    for(let j = 0; j < itemListArr.length; j++) {
-        // console.log(j);
-        const listItemIndex = j; 
-    }
-
-    orderedList.addEventListener('click', (e) => {
-        const answer = confirm('are you sure you want to delete this item?');
-        if (answer) {
-            console.log(e.target);
-        }
-    })
-
-    
-    listItemDeleteBtns.forEach(btn => {
-        btn.addEventListener('click', e => {
-            const listItem = e.target.parentNode.parentNode.parentNode.parentNode;
-            const confirmAnswer = confirm('are you sure you want to delete this item?');
-            if (confirmAnswer) {
-                listItem.remove();
-            } 
-        })
-    })
-
-    clearAllBtn.addEventListener('click', () => {
-        console.log('delete btn clicked');
-        const ol = document.querySelector('.ordered-item-list');
-        const confirmDeleteAll = confirm('Would you like to clear all items?');
-        if (confirmDeleteAll) {
-            while (ol.firstChild) {
-                ol.removeChild(ol.firstChild);
-            }
-            //remove from arr/local storage
-            console.log(projectName);
-            LOCAL.removeItem(projectName);
-        } else {
-            return;
-        }
-        //would you like to clear all items and start over or delete project
-        //delete all children under ordered item list 
-        
-    })
-
-};
-
-//expand btn listener (called after item is created)
-const expandBtnListener = () => {
-    const expandIcon = document.querySelector('.expand-icon');
-    const goShoppingItemTest = document.querySelector('#go-shopping');
-    const itemOptions = document.querySelector('.item-options-container');
-    const itemText = document.querySelector('#item-text');
-    expandIcon.addEventListener('click', (e) => {
-        console.log(e, e.target);
-        e.preventDefault();
-        // goShoppingItemTest.classList.remove('list-item');
-        goShoppingItemTest.classList.toggle('expand-container');
-        // itemOptions.classList.toggle('expand-container');
-
-        const itemwrapper = document.createElement('div');
-        itemwrapper.classList.add('list-item');
-        itemwrapper.appendChild(itemText);
-        itemwrapper.appendChild(itemOptions);
-
-        goShoppingItemTest.appendChild(itemwrapper);
-        
-
-        const details = document.createElement('div');
-        details.classList.add('details-container');
-        goShoppingItemTest.appendChild(details);  
-    })
-};
 
 //get name and date from items and call createItemHTML()
 const getNameAndDate = (arr, projectName) => {
@@ -166,6 +77,7 @@ const formSubmission = (clickCount, projectName)=> {
         form.reset();
         //create new list item
         const item = new ListItem(`${inputValue}`, getDate());
+        console.log(item);
         //check if LOCAL STORAGE is empty or not 
         return projectLocalStorage(clickCount, projectName, item);
     })
@@ -209,6 +121,8 @@ const newItemBtnListener = (() => {
         let projectName;
         const projectExists = checkLocalStorage();
         if (projectExists) {
+            //this needs to be fixed
+            const currentProject = SESSION.key(0);
             let getClickCount = SESSION.getItem('hello');
             getClickCount++;
             console.log(getClickCount);
@@ -280,18 +194,17 @@ const projectLocalStorage = (clickCount, projectName, item) => {
         // JSON.parse(proj);
         console.log(proj);
         proj.push(item);
-        LOCAL.setItem(`${projectName}`, JSON.stringify(item));
+        LOCAL.setItem(`${projectName}`, JSON.stringify(proj));
         createItemFromLocalStorage(item, projectName);
         // return projectLocalStorage(projectName, item, clickCount);
-    } 
-    if (!document.querySelector('#projectNameHeader').textContent === 'myProject') {
+    } else {
         addClickCount(clickCount, projectName);
         
         LOCAL.setItem(`${projectName}`, JSON.stringify([item]));
         createItemFromLocalStorage(item, projectName);
+
     }
-    
-    
+
     return LOCAL;
 }
 
@@ -333,11 +246,14 @@ const addClickCount = (clickCount, projectName) => {
 const loadDefaultPage = () => {
     const d = createDefaultArrayList();
     const defaultProjectName = 'myProject';
-    console.log(d);
-    console.log(d.length);
-    LOCAL.setItem('myProject', `${JSON.stringify(d)}`);
+    // console.log(d);
+    // console.log(d.length);
+    // LOCAL.setItem('myProject', `${JSON.stringify(d)}`);
     return getNameAndDate(d, defaultProjectName);
 }
+
+//LOAD PAGE
+const loadPage = (()  => DOMLoaded(loadDefaultPage, loadSessionStoragePage))();
 
 export {
     deleteBtnListener, 
