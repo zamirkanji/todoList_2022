@@ -14,7 +14,6 @@ const createDefaultArrayList = () => {
         four,
         five
     ]
-    // console.log(defaultArrayList);
     return defaultArrayList;
 }
 

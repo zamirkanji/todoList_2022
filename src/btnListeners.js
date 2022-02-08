@@ -5,12 +5,6 @@ const deleteBtnListener = (projectName) => {
     const listItemDeleteBtns = document.querySelectorAll('#delete-item');
     const clearAllBtn = document.getElementById('clear-all-items-btn');
 
-    //query selector all, THEN forEach or Map function to add event listener to all delete btns
-    // listItemDeleteBtns.addEventListener('click', e => {
-    //     alert('Are you sure you want to delete this item?');
-    // })
-    // console.log(listItemDeleteBtns.entries);
-
     for (let i = 0; i < listItemDeleteBtns.length; i++) {
         // console.log(i);
         const btnIndex = i;
@@ -28,7 +22,6 @@ const deleteBtnListener = (projectName) => {
         }
     })
 
-    
     listItemDeleteBtns.forEach(btn => {
         btn.addEventListener('click', e => {
             const listItem = e.target.parentNode.parentNode.parentNode.parentNode;

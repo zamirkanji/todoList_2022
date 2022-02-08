@@ -103,19 +103,12 @@ const menuEventListener = (() => {
 //new list item btn listener 
 const newItemBtnListener = (() => {
     let clickCount = 0;
-    //default list displayed on first open.
-    //if first time clicking (opening page), as in LOCAL STOR is empty
-    //ask if user would like to clear all and start a new project 
     const newItemBtn = document.querySelector('#create-new-item-btn');
     const inputNewItem = document.querySelector('#input-new-item');
     const labelNewItem = document.querySelector('.label-new-item');
     const submitBtn = document.querySelector('#submit-btn');
 
     newItemBtn.addEventListener('click', (e) => {
-
-        
-
-        
         e.preventDefault();
         //remove display none from input form items
         let projectName;
@@ -126,8 +119,7 @@ const newItemBtnListener = (() => {
             let getClickCount = SESSION.getItem('hello');
             getClickCount++;
             console.log(getClickCount);
-        } 
-        if (document.querySelector('#projectNameHeader').textContent === 'myProject') {
+        } else {
             clickCount++;
             console.log(clickCount);
             //ask user to name new project
@@ -186,10 +178,6 @@ const projectLocalStorage = (clickCount, projectName, item) => {
     }
     
     if (projectExists) {
-        console.log(item);
-        //add to current project array in local storage 
-        // return addListItemToArr(item); 
-        // const proj = LOCAL.getItem(`${projectName}`);
         let proj = JSON.parse(LOCAL.getItem(getCurrentProjectName));
         // JSON.parse(proj);
         console.log(proj);
@@ -232,8 +220,6 @@ const createProjectFolder = (projectName) => {
 
 //add click count to session storage to track
 const addClickCount = (clickCount, projectName) => {
-    //if project name already exists inside storage, push
-    //otherwise create
     let data = SESSION.getItem(projectName);
     if (data) {
         console.log(SESSION.getItem(projectName));
@@ -246,8 +232,6 @@ const addClickCount = (clickCount, projectName) => {
 const loadDefaultPage = () => {
     const d = createDefaultArrayList();
     const defaultProjectName = 'myProject';
-    // console.log(d);
-    // console.log(d.length);
     // LOCAL.setItem('myProject', `${JSON.stringify(d)}`);
     return getNameAndDate(d, defaultProjectName);
 }
