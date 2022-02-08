@@ -6,7 +6,7 @@ import { mdiChevronDown, mdiConsoleLine, mdiControllerClassic, mdiWindowShutter 
 import { getDate, itemListArr, ListItem } from './app.js';
 import createDefaultArrayList from './defaultProject';
 import createItemHTML from './DOM';
-import { deleteBtnListener, expandBtnListener } from './btnListeners';
+import { deleteBtnListener, expandBtnListener, clearAllBtnListener } from './btnListeners';
 
 const LOCAL = window.localStorage;
 const SESSION = window.sessionStorage;

@@ -3,7 +3,7 @@ const deleteBtnListener = (projectName) => {
     console.log(projectName);
     const orderedList = document.querySelector('.ordered-item-list');
     const listItemDeleteBtns = document.querySelectorAll('#delete-item');
-    const clearAllBtn = document.getElementById('clear-all-items-btn');
+    
 
     for (let i = 0; i < listItemDeleteBtns.length; i++) {
         // console.log(i);
@@ -31,8 +31,13 @@ const deleteBtnListener = (projectName) => {
             } 
         })
     })
+};
 
+const clearAllBtnListener = (() => {
+    const clearAllBtn = document.getElementById('clear-all-items-btn');
     clearAllBtn.addEventListener('click', () => {
+        //get current project (Whatever is clicked on sidebar)
+        const getCurrentProjectName = window.localStorage.key(0);
         console.log('delete btn clicked');
         const ol = document.querySelector('.ordered-item-list');
         const confirmDeleteAll = confirm('Would you like to clear all items?');
@@ -41,8 +46,8 @@ const deleteBtnListener = (projectName) => {
                 ol.removeChild(ol.firstChild);
             }
             //remove from arr/local storage
-            console.log(projectName);
-            LOCAL.removeItem(projectName);
+            // console.log(projectName);
+            LOCAL.removeItem(getCurrentProjectName);
         } else {
             return;
         }
@@ -50,8 +55,9 @@ const deleteBtnListener = (projectName) => {
         //delete all children under ordered item list 
         
     })
+})();
 
-};
+
 
 //expand btn listener (called after item is created)
 const expandBtnListener = () => {
@@ -82,5 +88,6 @@ const expandBtnListener = () => {
 
 export {
     deleteBtnListener,
-    expandBtnListener
+    expandBtnListener,
+    clearAllBtnListener
 }
