@@ -4,6 +4,7 @@ import expand from './img/noun-expand-1181747.png';
 import { mdiChevronDown, mdiConsoleLine, mdiControllerClassic, mdiWindowShutter } from '@mdi/js';
 import { getDate, itemListArr, ListItem } from './app.js';
 import createDefaultArrayList from './defaultProject';
+import createItemHTML from './DOM';
 
 const LOCAL = window.localStorage;
 const SESSION = window.sessionStorage;
@@ -32,75 +33,6 @@ const addDisplayNone = (d) => {
     return d.classList.add('display');
 }
 
-//create item in HTML, add to DOM
-const createItemHTML = (n, dc, projectName) => {
-    const orderedItemList = document.querySelector('.ordered-item-list');
-    //create item options container
-    const createNewItemOptionsContainer = document.createElement('div');
-    createNewItemOptionsContainer.classList.add('item-options-container');
-    //add DELETE Btn/Icon to item
-    const createItemDeleteBtn = document.createElement('div');
-    createItemDeleteBtn.classList.add('item-delete-btn');
-    const deleteBtn = document.createElement('button');
-    deleteBtn.id = 'delete-item';
-    const deleteIcon = document.createElement('div');
-    deleteIcon.id = 'delete-icon';
-    deleteBtn.appendChild(deleteIcon);
-    createItemDeleteBtn.appendChild(deleteBtn);
-    //add EXPAND Btn/Icon to item
-    const createExpandIconBtn = document.createElement('button');
-    createExpandIconBtn.classList.add('expand-icon-btn');
-    createExpandIconBtn.type = 'button';
-    createExpandIconBtn.name = 'expand-icon-btn';
-    const createExpandIconDiv = document.createElement('div');
-    createExpandIconDiv.classList.add('expand-icon');
-    createExpandIconBtn.appendChild(createExpandIconDiv);
-
-
-    //add checkbox
-    const checkboxLabel = document.createElement('label');
-    checkboxLabel.for = 'item-checkbox';
-    checkboxLabel.id = 'item-checkbox';
-    const createCheckbox = document.createElement('input');
-    createCheckbox.id = 'item-checkbox';
-    createCheckbox.type = 'checkbox';
-    createCheckbox.name = 'item-checkbox';
-    //add important Icon
-
-    //append icon, delete btn to list item
-    createNewItemOptionsContainer.appendChild(checkboxLabel);
-    checkboxLabel.appendChild(createCheckbox);
-    createNewItemOptionsContainer.appendChild(createItemDeleteBtn);
-    createNewItemOptionsContainer.appendChild(createExpandIconBtn);
-    //new list item 
-    const newListItem = document.createElement('li');
-    const span = document.createElement('span');
-    newListItem.appendChild(span);
-    newListItem.classList.add('list-item');
-    span.classList.add('item-text');
-    span.classList.add('text');
-    span.textContent = n;
-
-
-    
-    //add item options container
-    newListItem.appendChild(createNewItemOptionsContainer);
-    //add new list item to ordered list
-    orderedItemList.appendChild(newListItem);
-
-    //log storage
-    // console.log(LOCAL);
-
-    //return delete btn, expand btn listener once item is created 
-    return () => {
-        console.log('test');
-        const a = deleteBtnListener(projectName);
-        const b = expandBtnListener();
-        // const c = itemEditable();
-        return a && b;
-    }
-}
-
 //make item editable
 const itemEditable = () => {
     const item = document.querySelector('.item-text');
@@ -118,6 +50,7 @@ const itemEditable = () => {
 //event listener to delete item (called after item is created)
 const deleteBtnListener = (projectName) => {
     console.log(projectName);
+    const orderedList = document.querySelector('.ordered-item-list');
     const listItemDeleteBtns = document.querySelectorAll('#delete-item');
     const clearAllBtn = document.getElementById('clear-all-items-btn');
 
@@ -137,6 +70,24 @@ const deleteBtnListener = (projectName) => {
         const listItemIndex = j; 
     }
 
+    orderedList.addEventListener('click', (e) => {
+        const answer = confirm('are you sure you want to delete this item?');
+        if (answer) {
+            console.log(e.target);
+        }
+    })
+
+    
+    listItemDeleteBtns.forEach(btn => {
+        btn.addEventListener('click', e => {
+            const listItem = e.target.parentNode.parentNode.parentNode.parentNode;
+            const confirmAnswer = confirm('are you sure you want to delete this item?');
+            if (confirmAnswer) {
+                listItem.remove();
+            } 
+        })
+    })
+
     clearAllBtn.addEventListener('click', () => {
         console.log('delete btn clicked');
         const ol = document.querySelector('.ordered-item-list');
@@ -148,27 +99,14 @@ const deleteBtnListener = (projectName) => {
             //remove from arr/local storage
             console.log(projectName);
             LOCAL.removeItem(projectName);
+        } else {
+            return;
         }
         //would you like to clear all items and start over or delete project
         //delete all children under ordered item list 
         
     })
 
-    listItemDeleteBtns.forEach(btn => {
-        btn.addEventListener('click', e => {
-            const listItem = e.target.parentNode.parentNode.parentNode.parentNode;
-            const confirmAnswer = confirm('are you sure you want to delete this item?');
-            if (confirmAnswer) {
-                listItem.remove();
-
-                // if (i === j) {
-                //     itemListArr.filter(l => {
-                //         !i;
-                //     })
-                // }
-            } 
-        })
-    })
 };
 
 //expand btn listener (called after item is created)
@@ -203,8 +141,10 @@ const getNameAndDate = (arr, projectName) => {
     arr.forEach(obj => {
         const n = obj.name;
         const dc = obj.dateCreated;
-        const createItem = createItemHTML(n, dc, projectName);
-        return createItem();
+
+        // const createItem = createItemHTML(n, dc, projectName);
+        // return createItem();
+        createItemHTML(n, dc, projectName);
     })
 }
 
@@ -260,6 +200,9 @@ const newItemBtnListener = (() => {
     const submitBtn = document.querySelector('#submit-btn');
 
     newItemBtn.addEventListener('click', (e) => {
+
+        
+
         
         e.preventDefault();
         //remove display none from input form items
@@ -269,7 +212,8 @@ const newItemBtnListener = (() => {
             let getClickCount = SESSION.getItem('hello');
             getClickCount++;
             console.log(getClickCount);
-        } else {
+        } 
+        if (document.querySelector('#projectNameHeader').textContent === 'myProject') {
             clickCount++;
             console.log(clickCount);
             //ask user to name new project
@@ -312,22 +256,12 @@ const deleteChildElements = (parentEl) => {
 
 //the value of the key value pair is the object array that is created for each project (list of items)
 const projectLocalStorage = (clickCount, projectName, item) => {
+    const getCurrentProjectName = document.querySelector('#projectNameHeader').textContent;
+    console.log(getCurrentProjectName);
     const localStorageItemList = [];
     //FIND PROJECT NAME AND PUSH LAST ITEM INTO IT 
 
-    // LOCALSTOR.setItem('myProject', JSON.stringify(itemListArr));
-    // console.log(JSON.parse(item));
-    // LOCALSTOR.myProject.push(JSON.stringify(lastItem));
-    // SESSIONSTOR.setItem('clickCount', clickCount); //resets  when clear all AND new project is created
-    // console.log(LOCALSTOR.myProject);
-    // LOCALSTOR.setItem(`${projectName}`, JSON.stringify(item));
-    // console.log(lastItem);
-    // LOCALSTOR.myProject.push(JSON.stringify(lastItem));
-    // SESSIONSTOR.setItem('clickCount', clickCount); //resets  when clear all AND new project is created
-    // console.log(LOCALSTOR.myProject);
-
     const projectExists = checkLocalStorage();
-    console.log(projectExists);
 
     const createItemFromLocalStorage = (item, projectName) => {
         // const d = createDefaultArrayList();
@@ -342,16 +276,15 @@ const projectLocalStorage = (clickCount, projectName, item) => {
         //add to current project array in local storage 
         // return addListItemToArr(item); 
         // const proj = LOCAL.getItem(`${projectName}`);
-        let proj = JSON.parse(LOCAL.getItem('hello'));
+        let proj = JSON.parse(LOCAL.getItem(getCurrentProjectName));
         // JSON.parse(proj);
         console.log(proj);
-        console.log(item);
-        console.log(Array.isArray(proj));
-        proj.push(JSON.stringify(item));
-        
+        proj.push(item);
+        LOCAL.setItem(`${projectName}`, JSON.stringify(item));
         createItemFromLocalStorage(item, projectName);
         // return projectLocalStorage(projectName, item, clickCount);
-    } else {
+    } 
+    if (!document.querySelector('#projectNameHeader').textContent === 'myProject') {
         addClickCount(clickCount, projectName);
         
         LOCAL.setItem(`${projectName}`, JSON.stringify([item]));
@@ -399,5 +332,15 @@ const addClickCount = (clickCount, projectName) => {
 // load in default page (using defaultarraylist)
 const loadDefaultPage = () => {
     const d = createDefaultArrayList();
-    return getNameAndDate(d);
+    const defaultProjectName = 'myProject';
+    console.log(d);
+    console.log(d.length);
+    LOCAL.setItem('myProject', `${JSON.stringify(d)}`);
+    return getNameAndDate(d, defaultProjectName);
+}
+
+export {
+    deleteBtnListener, 
+    expandBtnListener,
+    itemEditable
 }
