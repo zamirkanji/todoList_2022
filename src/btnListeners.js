@@ -90,8 +90,11 @@ const ifChecked = (e) => {
     const dateCheckedOff = new Date().toLocaleDateString();
     const checkBoxIsChecked = document.querySelector('#item-checkbox');
     checkBoxIsChecked.addEventListener('change', e => {
+        //this input should be attached to the list item somehow
+        //could make the list item the same input
         if (e.target.checked) {
             console.log('is checked');
+            //add datecheckedoff to listItem object
         }
     })
 }
