@@ -10,6 +10,7 @@ class ListItem {
         this.name = name;
         this.notes = 'test';
         this.dateCreated = dateCreated
+        this.checked = false;
     }
     // get dateCreated () {
     //     return this.dateCreated;

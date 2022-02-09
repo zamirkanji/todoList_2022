@@ -86,8 +86,19 @@ const expandBtnListener = () => {
     })
 };
 
+const ifChecked = (e) => {
+    const dateCheckedOff = new Date().toLocaleDateString();
+    const checkBoxIsChecked = document.querySelector('#item-checkbox');
+    checkBoxIsChecked.addEventListener('change', e => {
+        if (e.target.checked) {
+            console.log('is checked');
+        }
+    })
+}
+
 export {
     deleteBtnListener,
     expandBtnListener,
-    clearAllBtnListener
+    clearAllBtnListener,
+    ifChecked
 }

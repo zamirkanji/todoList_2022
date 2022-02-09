@@ -1,4 +1,4 @@
-import { deleteBtnListener, expandBtnListener, itemEditable } from ".";
+import { deleteBtnListener, expandBtnListener, itemEditable, ifChecked } from ".";
 
 //create item in HTML, add to DOM
 const createItemHTML = (n, dc, projectName) => {
@@ -28,7 +28,7 @@ const createItemHTML = (n, dc, projectName) => {
     //add checkbox
     const checkboxLabel = document.createElement('label');
     checkboxLabel.for = 'item-checkbox';
-    checkboxLabel.id = 'item-checkbox';
+    checkboxLabel.id = 'item-checkbox-label';
     const createCheckbox = document.createElement('input');
     createCheckbox.id = 'item-checkbox';
     createCheckbox.type = 'checkbox';
@@ -66,8 +66,9 @@ const createItemHTML = (n, dc, projectName) => {
             // const a = deleteBtnListener(projectName);
             const b = expandBtnListener();
             // const c = itemEditable();
+            const d = ifChecked();
             // return a && b;
-            return b;
+            return b && d;
     }
 }
 

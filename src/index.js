@@ -6,7 +6,7 @@ import { mdiChevronDown, mdiConsoleLine, mdiControllerClassic, mdiWindowShutter 
 import { getDate, itemListArr, ListItem } from './app.js';
 import createDefaultArrayList from './defaultProject';
 import createItemHTML from './DOM';
-import { deleteBtnListener, expandBtnListener, clearAllBtnListener } from './btnListeners';
+import { deleteBtnListener, expandBtnListener, clearAllBtnListener, ifChecked } from './btnListeners';
 
 const LOCAL = window.localStorage;
 const SESSION = window.sessionStorage;
@@ -20,7 +20,7 @@ const clearStorage = () => {
 }
 
 const clearAllStorage = clearStorage();
-clearAllStorage();
+// clearAllStorage();
 
 
 //remove display (none) from element 
@@ -224,7 +224,7 @@ const addClickCount = (clickCount, projectName) => {
     if (data) {
         console.log(SESSION.getItem(projectName));
     }
-    console.log(SESSION);
+    // console.log(SESSION);
     return window.sessionStorage.setItem(`${projectName}`, clickCount);
 }
 
@@ -242,5 +242,6 @@ const loadPage = (()  => DOMLoaded(loadDefaultPage, loadSessionStoragePage))();
 export {
     deleteBtnListener, 
     expandBtnListener,
-    itemEditable
+    itemEditable,
+    ifChecked
 }
