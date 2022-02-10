@@ -36,8 +36,8 @@ const createItemHTML = (n, dc, projectName) => {
     //add important Icon
 
     //append icon, delete btn to list item
-    createNewItemOptionsContainer.appendChild(checkboxLabel);
-    checkboxLabel.appendChild(createCheckbox);
+    // createNewItemOptionsContainer.appendChild(checkboxLabel);
+    // checkboxLabel.appendChild(createCheckbox);
     createNewItemOptionsContainer.appendChild(createItemDeleteBtn);
     createNewItemOptionsContainer.appendChild(createExpandIconBtn);
     //new list item 
@@ -52,6 +52,8 @@ const createItemHTML = (n, dc, projectName) => {
 
     
     //add item options container
+    newListItem.appendChild(checkboxLabel);
+    newListItem.appendChild(createCheckbox);
     newListItem.appendChild(createNewItemOptionsContainer);
     //add new list item to ordered list
     orderedItemList.appendChild(newListItem);
