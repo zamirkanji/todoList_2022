@@ -33,16 +33,22 @@ const addDisplayNone = (d) => {
     return d.classList.add('display');
 }
 
-//make item editable
+//make item editable - 
+//need submit and cancel btn once dbl clicked
+//if submitted, save new text as value of input 
 const itemEditable = () => {
+    let itemDblClicked = false;
     const item = document.querySelector('.item-text');
-    item.contentEditable = true;
+    
+    item.addEventListener('click', e => {
+        e.preventDefault();
+    })
+
     item.addEventListener('dblclick', () => {
-        if (contentEditable) {
+        itemDblClicked = true;
+        if (itemDblClicked) {
             console.log('item being edited');
-            //remove span
-            //create input
-            //
+
         }
     })
 }

@@ -3,7 +3,7 @@
     --font-weight: 300;
     --border-test: 2px solid yellow;
     --dark-blue: #0F2027;
-    --middle-blue: #203A43;
+    --middle-blue: #7ba5b6;
     --light-blue: #2C5364;
     --closetowhite: #598091;
 }
@@ -255,9 +255,9 @@ html {
     text-decoration: none;
     list-style: none; */
     /* background-color: var(--closetowhite); */
-    background-color: var(--black-color);
+    background-color: white;
     height: 45px;
-    color: white;
+    color: var(--black-color);
     letter-spacing: 1px;
     display: flex;
     border-radius: 5px;
@@ -268,18 +268,40 @@ html {
     /* flex: 1.75; */
 }
 
+.list-input-container {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .item-text {
     margin: 0;
     padding: 0;
-    color: white;
+    color: black;
     flex: 1.75;
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
 
+
+#item-checkbox {
+    flex: .1;
+    /* height: 100%; */
+    /* border-radius: 50px; */
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+}
+
 .item-options-container {
-    flex: .3;
+    flex: .25;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -287,13 +309,8 @@ html {
     padding: 10px;
     /* height: 100%; */
     gap: 5px;
-    background-color: var(--closetowhite);
+    background-color: white;
     border-radius: 0 5px 5px 0;
-}
-
-#item-checkbox {
-    flex: 1;
-    /* border-radius: 50px; */
 }
 
 .item-delete-btn {
@@ -308,7 +325,7 @@ html {
 #delete-item {
     border: none;
     border-radius: 10px;
-    background-color: var(--closetowhite);
+    background-color: white;
 }
 
 
@@ -323,7 +340,7 @@ html {
 }
 
 .expand-icon-btn {
-    background-color: var(--closetowhite);
+    background-color: white;
     border: none;
     flex: 1;
     height: 100%;
