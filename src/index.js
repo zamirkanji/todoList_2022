@@ -46,6 +46,8 @@ const itemEditable = () => {
 
     item.addEventListener('dblclick', () => {
         itemDblClicked = true;
+        // const disabledItem = item.getAttribute('disabled');
+        item.removeAttribute('disabled');
         if (itemDblClicked) {
             console.log('item being edited');
 

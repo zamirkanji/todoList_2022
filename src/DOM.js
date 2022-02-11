@@ -4,6 +4,9 @@ import { deleteBtnListener, expandBtnListener, itemEditable, ifChecked } from ".
 
 //create btns for submit and cancel when editing item
 const createSubmitCancelBtns = () => {
+    
+
+
     const submitTextChange = document.createElement('button');
     const cancelTextChange = document.createElement('button');
 }
@@ -64,6 +67,7 @@ const createItemHTML = (n, dc, projectName) => {
 
     const inputText = document.createElement('input');
     inputText.classList.add('item-text');
+    inputText.disabled = 'disabled';
     inputText.type = 'text';
     inputText.classList.add('text');
     inputText.value = n;
@@ -84,10 +88,10 @@ const createItemHTML = (n, dc, projectName) => {
     } else {
             // const a = deleteBtnListener(projectName);
             const b = expandBtnListener();
-            // const c = itemEditable();
+            const c = itemEditable();
             const d = ifChecked();
             // return a && b;
-            return b && d;
+            return b && c && d;
     }
 }
 
