@@ -4,7 +4,7 @@ import { deleteBtnListener, expandBtnListener, itemEditable, ifChecked } from ".
 
 //create btns for submit and cancel when editing item
 const createSubmitCancelBtns = () => {
-    
+    const inputText = document.querySelector('.item-text');
 
 
     const submitTextChange = document.createElement('button');
@@ -47,7 +47,8 @@ const createItemHTML = (n, dc, projectName) => {
 
     //add checkbox
     const checkboxLabel = document.createElement('label');
-    checkboxLabel.for = 'item-checkbox';
+    checkboxLabel.htmlFor = 'item-checkbox';
+    // checkboxLabel.for = 'item-checkbox';
     checkboxLabel.id = 'item-checkbox-label';
     const createCheckbox = document.createElement('input');
     createCheckbox.id = 'item-checkbox';

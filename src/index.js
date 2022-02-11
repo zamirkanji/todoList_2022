@@ -85,7 +85,6 @@ const formSubmission = (clickCount, projectName)=> {
         form.reset();
         //create new list item
         const item = new ListItem(`${inputValue}`, getDate());
-        console.log(item);
         //check if LOCAL STORAGE is empty or not 
         return projectLocalStorage(clickCount, projectName, item);
     })
@@ -182,6 +181,7 @@ const projectLocalStorage = (clickCount, projectName, item) => {
         const d = item;
             const n = d.name;
             const dc = d.dateCreated;
+            //last item?
             return createItemHTML(n, dc, projectName);
     }
     
@@ -190,9 +190,11 @@ const projectLocalStorage = (clickCount, projectName, item) => {
         // JSON.parse(proj);
         console.log(proj);
         proj.push(item);
-        LOCAL.setItem(`${projectName}`, JSON.stringify(proj));
-        createItemFromLocalStorage(item, projectName);
-        // return projectLocalStorage(projectName, item, clickCount);
+        console.log(item, getCurrentProjectName);
+        // LOCAL.setItem(`${projectName}`, JSON.stringify(proj));
+        LOCAL.setItem(getCurrentProjectName, JSON.stringify(proj));
+        // createItemFromLocalStorage(item, projectName);
+        createItemFromLocalStorage(item, getCurrentProjectName);
     } else {
         addClickCount(clickCount, projectName);
         
@@ -207,8 +209,11 @@ const projectLocalStorage = (clickCount, projectName, item) => {
 //JSON.parse item list arr, and create html element for each item in LOCAL storage 
 const loadSessionStoragePage = (projectName) => {
     document.querySelector('#projectNameHeader').textContent = projectName;
+    console.log(projectName);
+    const toDoListHeader = document.querySelector('.header-text');
     //create folder in sidebar on page load
     //will need to show all projects in sidebar
+    addDisplayNone(toDoListHeader);
     createProjectFolder(projectName);
 
     let i = LOCAL.getItem(`${projectName}`);
