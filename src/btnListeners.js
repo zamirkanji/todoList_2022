@@ -1,3 +1,5 @@
+import { checkLocalStorage, clearAllItemsDOM } from ".";
+
 //event listener to delete item (called after item is created)
 const deleteBtnListener = (projectName) => {
     console.log(projectName);
@@ -34,6 +36,8 @@ const deleteBtnListener = (projectName) => {
 };
 
 const clearAllBtnListener = (() => {
+    //once cleared, start new project?
+    //or just a n
     const clearAllBtn = document.getElementById('clear-all-items-btn');
     clearAllBtn.addEventListener('click', () => {
         //get current project (Whatever is clicked on sidebar)
@@ -42,9 +46,7 @@ const clearAllBtnListener = (() => {
         const ol = document.querySelector('.ordered-item-list');
         const confirmDeleteAll = confirm('Would you like to clear all items?');
         if (confirmDeleteAll) {
-            while (ol.firstChild) {
-                ol.removeChild(ol.firstChild);
-            }
+            clearAllItemsDOM(ol);
             //remove from arr/local storage
             // console.log(projectName);
             LOCAL.removeItem(getCurrentProjectName);
@@ -85,6 +87,12 @@ const expandBtnListener = () => {
         goShoppingItemTest.appendChild(details);  
     })
 };
+
+const deleteAllProjects = () => {
+    //going to delete from local storage
+}
+
+
 
 const ifChecked = (e) => {
     const dateCheckedOff = new Date().toLocaleDateString();

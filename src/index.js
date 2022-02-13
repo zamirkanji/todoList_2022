@@ -33,6 +33,13 @@ const addDisplayNone = (d) => {
     return d.classList.add('display');
 }
 
+const clearAllItemsDOM = (ol) => {
+    while (ol.firstChild) {
+        ol.removeChild(ol.firstChild);
+    }
+    return;
+}
+
 //make item editable - 
 //need submit and cancel btn once dbl clicked
 //if submitted, save new text as value of input 
@@ -96,6 +103,34 @@ const checkLocalStorage = (clickCount, projectName, item) => {
     return projectExists ? true : false;
 }
 
+const newProjBtn = (() => {
+    const createNewBtn = document.querySelector('.create-new-btn');
+    const ol = document.querySelector('.ordered-item-list');
+    createNewBtn.addEventListener('click', () => {
+        if (checkLocalStorage) {
+            //clear items and name
+             clearAllItemsDOM(ol);
+            //create new project (obj) inside local storage
+            //current proj will always be window.localstorage.key(0)
+        }
+    })
+})()
+
+const navClosed = () => {
+    const mainSidebar = document.getElementById('main-sidebar');
+    const mainBody = document.querySelector('.main-body');
+    mainBody.style.opacity = '1';
+    mainSidebar.style.zIndex = "0";
+    mainSidebar.style.width = "0";
+}
+const navOpen = () => {
+    const mainSidebar = document.getElementById('main-sidebar');
+    const mainBody = document.querySelector('.main-body');
+    mainSidebar.style.zIndex = "1";
+    mainSidebar.style.width = "250px";
+    mainBody.style.opacity = '.5';
+}
+
 //event listener to open up side menu bar
 const menuEventListener = (() => {
     const menuLogo = document.querySelector('.menu-icon');
@@ -103,7 +138,16 @@ const menuEventListener = (() => {
     menuLogo.addEventListener('click', (e) => {
         e.preventDefault();
         console.log('test');
-        mainSidebar.classList.toggle('display');
+        navOpen();
+    })
+})();
+
+const menuCloseBtnListener = (() => {
+    const menuCloseBtn = document.querySelector('.close-sidebar-icon');
+    const mainSidebar = document.querySelector('.main-sidebar');
+    menuCloseBtn.addEventListener('click', () => {
+        // addDisplayNone(mainSidebar);
+        navClosed();
     })
 })();
 
@@ -223,11 +267,18 @@ const loadSessionStoragePage = (projectName) => {
 
 //create project folder in sidebar when new project is created
 const createProjectFolder = (projectName) => {
+    const root = document.querySelector(':root');
     const currentP = document.querySelector('#current-p');
+    const sideBarMainList = document.querySelector('.sidebar-main-list');
+
+    const rs = getComputedStyle(root);
+    const darkBlue = rs.getPropertyValue('--dark-blue');
+
     const newProj = document.createElement('li');
     // newProj.classList.add('text');
     newProj.classList.add('projectName');
     newProj.textContent = projectName;
+    newProj.style.backgroundColor = darkBlue;
     currentP.appendChild(newProj);
 }
 
@@ -256,5 +307,7 @@ export {
     deleteBtnListener, 
     expandBtnListener,
     itemEditable,
-    ifChecked
+    ifChecked,
+    checkLocalStorage,
+    clearAllItemsDOM
 }
