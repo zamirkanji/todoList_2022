@@ -2,10 +2,11 @@
     --black-color: black;
     --font-weight: 300;
     --border-test: 2px solid yellow;
-    --dark-blue: #344c57;
-    --dark-grey: #10151686;
+    --dark-blue: #476a7a;
+    --dark-grey: #202a2c86;
     --light-blue: #2C5364;
     --closetowhite: #6d9eb3;
+    --redOrange: rgb(255, 68, 11);
 }
 
 * {
@@ -41,7 +42,7 @@ html {
 /* main sidebar */
 .main-sidebar {
     /* flex: .1; */
-    height: 250px;
+    min-height: 250px;
     display: flex;
     justify-content: center;
     /* align-items: center; */
@@ -120,6 +121,10 @@ html {
     color: #a3a3a3;
     font-size: 18px;
     font-size: 1.25rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 /* ul.sidebar-list-item {
@@ -144,8 +149,14 @@ ul.sidebar-list-item > li::before {
 }
 
 .projectName {
-    color: white;
+    margin: 0 0 0 10px;
+    color: black;
+    font-size: 1rem;
+    text-align: center;
+    letter-spacing: 1.5px;
     padding: 10px;
+    border-radius: 10px;
+    height: 100%;
 }
 
 .sidebar-create-new-btn {
@@ -176,7 +187,7 @@ ul.sidebar-list-item > li::before {
 
 .main-header {
     margin: 0;
-    padding: 10px;
+    padding: 0 15px 0 15px;
     flex: .30;
     display: flex;
     justify-content: space-between;
@@ -252,49 +263,72 @@ ul.sidebar-list-item > li::before {
     gap: 15px;
 }
 
+
+
+
+
+
+
+/* *************************** FORM SUBMISSION FOR LIST ITEMS ************************* */
 .list-item-options {
     flex: .25;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+    margin: 0;
+    padding: 0;
     /* border: 1px solid violet; */
 }
-
-#create-new-item-btn {
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
 
 .form-main {
     /* justify-content: space-between; */
     gap: 10px;
     width: 75%;
+    height: 100%;
     display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     /* border: 1px solid violet; */
     /* align-items: center; */
 }
 
+#create-new-item-btn {
+    /* width: 50px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .label-new-item {
     text-align: center;
-    flex: .5;
+    flex: .1;
 }
 
 #input-new-item {
+    margin: 0;
+    /* padding: 0; */
     border-radius: 5px;
     border: none;
-    flex: 1.5;
+    flex: 1.9;
+    background-color: whitesmoke;
+    opacity: .8;
+}
+
+#input-new-item:checked {
+    border: none;
 }
 
 #submit-btn {
     flex: .5;
 }
 
+#clear-all-items-btn {
+    background-color: var(--redOrange);
+    color: black;
+}
 
-/* *********************each item********************* */
+
+/* ***************************** EACH ITEM ******************************** */
 .list-item {
     margin: 0;
     padding: 0 0 0 10px;
@@ -314,6 +348,7 @@ ul.sidebar-list-item > li::before {
     /* justify-content: space-between; */
     /* font-size: 100%; */
     /* flex: 1.75; */
+    transition: all .5s ease;
 }
 
 .list-input-container {
@@ -340,7 +375,7 @@ ul.sidebar-list-item > li::before {
     padding: 0;
     margin: 0;
     border: none;
-    background-color: whitesmoke;
+    background-color: var(--dark-grey);
     -webkit-appearance: none;
 	border: none;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
@@ -348,20 +383,21 @@ ul.sidebar-list-item > li::before {
 	border-radius: 5px;
     /* width: 10px;
     height: 10px; */
-
 }
 
 #item-checkbox:checked {
     /* background-color: #e9ecee;
 	border: 1px solid #adb8c0; */
 	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
-	color: #99a1a7;
+	color: var(--redOrange);
+    
 }
 
 #item-checkbox:checked::after {
-    color: var(--closetowhite);
+    color: var(--redOrange);
     content: '\2714';
 	font-size: 14px;
+    
 	/* position: absolute; */
 	/* top: 0px;+
 	left: 3px; */
@@ -379,7 +415,7 @@ input[type=text] {
     box-sizing: border-box;
     border: none;
     background-color: var(--dark-blue);
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     /* font-size: 100%; */
 }
 
@@ -518,13 +554,14 @@ input[type=text] {
     border-radius: 5px;
     color: var(--closetowhite);
     padding: 10px;
-    width: 75px;
+    width: 100px;
     height: 45px;
+    font-size: 1rem;
 }
 
 .create-new-btn {
-    background-color: var(--dark-blue);
-    color: black;
+    background-color: black;
+    color: var(--closetowhite);
 }
 
 .item-btn {

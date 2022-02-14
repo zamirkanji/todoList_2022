@@ -18,7 +18,6 @@ const clearStorage = () => {
     }
     
 }
-
 const clearAllStorage = clearStorage();
 // clearAllStorage();
 
@@ -74,17 +73,63 @@ const getNameAndDate = (arr, projectName) => {
     })
 }
 
+const createItemFromLocalStorage = (item, projectName) => {
+    // const d = createDefaultArrayList();
+    const d = item;
+        const n = d.name;
+        const dc = d.dateCreated;
+        //last item?
+        return createItemHTML(n, dc, projectName);
+}
+
+//check local storage to see if project already exists
+const checkLocalStorage = (clickCount, projectName, item) => {
+    const projectExists = LOCAL.length > 0;
+    return projectExists ? true : false;
+}
+
+
+const deleteChildElements = (parentEl) => {
+    return () => {
+        if (true) {
+            while (parentEl.firstChild) {
+                parentEl.removeChild(parentEl.firstChild);
+            }   
+            //remove from arr/local storage
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //listen for form submission to add each item 
 const formSubmission = (clickCount, projectName)=> {
     const form = document.querySelector('.form-main');
     form.addEventListener('submit', (e)=> {
         const inputValue = document.querySelector('#input-new-item').value;
+        let firstLetter = inputValue.splice(0, 1);
+        console.log(firstLetter);
+        // inputValue.
         //remove form display
         e.preventDefault();
         //remove dispalay (add back display: none)
         const inputNewItem = document.querySelector('#input-new-item');
         const submitBtn = document.querySelector('#submit-btn');
         const labelNewItem = document.querySelector('.label-new-item');
+
         addDisplayNone(inputNewItem);
         addDisplayNone(submitBtn);
         addDisplayNone(labelNewItem);
@@ -93,18 +138,33 @@ const formSubmission = (clickCount, projectName)=> {
         //create new list item
         const item = new ListItem(`${inputValue}`, getDate());
         //check if LOCAL STORAGE is empty or not 
+        if(projectName == 'myProject') {
+            return getNameAndDate(item, projectName);
+        }
         return projectLocalStorage(clickCount, projectName, item);
     })
 };
 
-//check local storage to see if project already exists
-const checkLocalStorage = (clickCount, projectName, item) => {
-    const projectExists = LOCAL.length > 0;
-    return projectExists ? true : false;
-}
 
-const newProjBtn = (() => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const mainEventListeners = (() => {
     let clickCount = 0;
+    let projectName;
+    
     const newItemBtn = document.querySelector('#create-new-item-btn');
     const inputNewItem = document.querySelector('#input-new-item');
     const labelNewItem = document.querySelector('.label-new-item');
@@ -112,13 +172,13 @@ const newProjBtn = (() => {
     const createNewBtn = document.querySelector('.create-new-btn');
     const ol = document.querySelector('.ordered-item-list');
 
-    createNewBtn.addEventListener('click', () => {
-        let projectName;
-        const projectExists = checkLocalStorage();
+    const projectExists = checkLocalStorage();
 
+    //create new project Btn listener
+    createNewBtn.addEventListener('click', () => {
         if (projectExists) {
-            //clear items and name
-             clearAllItemsDOM(ol);
+            //CLEAR ITEMS AND NAME
+            clearAllItemsDOM(ol);
             //create new project (obj) inside local storage
             //current proj will always be window.localstorage.key(0)
         } else {
@@ -132,6 +192,9 @@ const newProjBtn = (() => {
             if (projectName === null) {
                 return;
             } else {
+                //clear default project from DOM 
+                clearAllItemsDOM(ol);
+
                 //add new project name to top of page
                 document.querySelector('#projectNameHeader').textContent = projectName;
                 //create new folder in current project list
@@ -153,22 +216,58 @@ const newProjBtn = (() => {
             }
         }
     })
-})()
 
-const navClosed = () => {
-    const mainSidebar = document.getElementById('main-sidebar');
-    const mainBody = document.querySelector('.main-body');
-    mainBody.style.opacity = '1';
-    mainSidebar.style.zIndex = "0";
-    mainSidebar.style.width = "0";
-}
-const navOpen = () => {
-    const mainSidebar = document.getElementById('main-sidebar');
-    const mainBody = document.querySelector('.main-body');
-    mainSidebar.style.zIndex = "1";
-    mainSidebar.style.width = "250px";
-    mainBody.style.opacity = '.5';
-}
+    //create new Item Btn Listener
+    newItemBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        //remove display none from input form items
+        console.log('test');
+
+        if (document.querySelector('#projectNameHeader').textContent === 'myProject') {
+            removeDisplayNone(inputNewItem);
+            removeDisplayNone(submitBtn);
+            removeDisplayNone(labelNewItem);
+
+            return formSubmission(0, 'myProject');
+        }
+        if (projectExists) {
+            //this needs to be fixed
+            const currentProject = SESSION.key(0);
+            let getClickCount = SESSION.getItem('hello');
+            getClickCount++;
+            console.log(getClickCount);
+        } else {
+            return;
+        }
+    
+        removeDisplayNone(inputNewItem);
+        removeDisplayNone(submitBtn);
+        removeDisplayNone(labelNewItem);
+
+        return formSubmission(clickCount, projectName);
+    })
+
+})();
+
+
+
+
+
+
+// const navClosed = () => {
+//     const mainSidebar = document.getElementById('main-sidebar');
+//     const mainBody = document.querySelector('.main-body');
+//     mainBody.style.opacity = '1';
+//     mainSidebar.style.zIndex = "0";
+//     mainSidebar.style.width = "0";
+// }
+// const navOpen = () => {
+//     const mainSidebar = document.getElementById('main-sidebar');
+//     const mainBody = document.querySelector('.main-body');
+//     mainSidebar.style.zIndex = "1";
+//     mainSidebar.style.width = "250px";
+//     mainBody.style.opacity = '.5';
+// }
 
 //event listener to open up side menu bar
 // const menuEventListener = (() => {
@@ -191,57 +290,30 @@ const navOpen = () => {
 // })();
 
 //new list item btn listener 
-const newItemBtnListener = (() => {
-    let clickCount = 0;
-    const newItemBtn = document.querySelector('#create-new-item-btn');
-    const inputNewItem = document.querySelector('#input-new-item');
-    const labelNewItem = document.querySelector('.label-new-item');
-    const submitBtn = document.querySelector('#submit-btn');
-
-    newItemBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        //remove display none from input form items
-
-        const projectExists = checkLocalStorage();
-
-        if (document.querySelector('#projectNameHeader') === 'myProject') {
-            removeDisplayNone(inputNewItem);
-            removeDisplayNone(submitBtn);
-            removeDisplayNone(labelNewItem);
-
-            return formSubmission();
-        }
-        if (projectExists) {
-            //this needs to be fixed
-            const currentProject = SESSION.key(0);
-            let getClickCount = SESSION.getItem('hello');
-            getClickCount++;
-            console.log(getClickCount);
-        } else {
-            return;
-        }
-    
-        removeDisplayNone(inputNewItem);
-        removeDisplayNone(submitBtn);
-        removeDisplayNone(labelNewItem);
-
-        return formSubmission(clickCount, projectName);
-    })
+// const newItemBtnListener = (() => {
+//     let clickCount = 0;
+//     const newItemBtn = document.querySelector('#create-new-item-btn');
+//     const inputNewItem = document.querySelector('#input-new-item');
+//     const labelNewItem = document.querySelector('.label-new-item');
+//     const submitBtn = document.querySelector('#submit-btn');
 
     
-})();
+
+    
+// })();
 
 //delete all child elements function
-const deleteChildElements = (parentEl) => {
-    return () => {
-        if (true) {
-            while (parentEl.firstChild) {
-                parentEl.removeChild(parentEl.firstChild);
-            }   
-            //remove from arr/local storage
-        }
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
 
 //the value of the key value pair is the object array that is created for each project (list of items)
 const projectLocalStorage = (clickCount, projectName, item) => {
@@ -252,14 +324,7 @@ const projectLocalStorage = (clickCount, projectName, item) => {
 
     const projectExists = checkLocalStorage();
 
-    const createItemFromLocalStorage = (item, projectName) => {
-        // const d = createDefaultArrayList();
-        const d = item;
-            const n = d.name;
-            const dc = d.dateCreated;
-            //last item?
-            return createItemHTML(n, dc, projectName);
-    }
+    
     
     if (projectExists) {
         let proj = JSON.parse(LOCAL.getItem(getCurrentProjectName));
