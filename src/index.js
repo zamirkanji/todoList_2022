@@ -113,6 +113,32 @@ const newProjBtn = (() => {
             //create new project (obj) inside local storage
             //current proj will always be window.localstorage.key(0)
         }
+
+        
+        if (checkLocalStorage === false) {
+            clickCount++;
+            console.log(clickCount);
+            //ask user to name new project
+            //wipe default list
+            //start new project with name given (key name in local storage obj)
+            projectName = prompt('Please enter the name of your project', 'myProject');
+
+            if (projectName === null) {
+                return;
+            } else {
+                //add new project name to top of page
+                document.querySelector('#projectNameHeader').textContent = projectName;
+                //create new folder in current project list
+                createProjectFolder(projectName);
+                //clear default array list 
+                const ol = document.querySelector('.ordered-item-list');
+                const d = deleteChildElements(ol);
+                d();
+
+                addClickCount(clickCount, projectName);
+            }
+            
+        }
     })
 })()
 
@@ -132,24 +158,24 @@ const navOpen = () => {
 }
 
 //event listener to open up side menu bar
-const menuEventListener = (() => {
-    const menuLogo = document.querySelector('.menu-icon');
-    const mainSidebar = document.querySelector('.main-sidebar');
-    menuLogo.addEventListener('click', (e) => {
-        e.preventDefault();
-        console.log('test');
-        navOpen();
-    })
-})();
+// const menuEventListener = (() => {
+//     const menuLogo = document.querySelector('.menu-icon');
+//     const mainSidebar = document.querySelector('.main-sidebar');
+//     menuLogo.addEventListener('click', (e) => {
+//         e.preventDefault();
+//         console.log('test');
+//         navOpen();
+//     })
+// })();
 
-const menuCloseBtnListener = (() => {
-    const menuCloseBtn = document.querySelector('.close-sidebar-icon');
-    const mainSidebar = document.querySelector('.main-sidebar');
-    menuCloseBtn.addEventListener('click', () => {
-        // addDisplayNone(mainSidebar);
-        navClosed();
-    })
-})();
+// const menuCloseBtnListener = (() => {
+//     const menuCloseBtn = document.querySelector('.close-sidebar-icon');
+//     const mainSidebar = document.querySelector('.main-sidebar');
+//     menuCloseBtn.addEventListener('click', () => {
+//         // addDisplayNone(mainSidebar);
+//         navClosed();
+//     })
+// })();
 
 //new list item btn listener 
 const newItemBtnListener = (() => {
@@ -164,6 +190,13 @@ const newItemBtnListener = (() => {
         //remove display none from input form items
         let projectName;
         const projectExists = checkLocalStorage();
+        if (document.querySelector('#projectNameHeader') === 'myProject') {
+            removeDisplayNone(inputNewItem);
+            removeDisplayNone(submitBtn);
+            removeDisplayNone(labelNewItem);
+
+            return formSubmission();
+        }
         if (projectExists) {
             //this needs to be fixed
             const currentProject = SESSION.key(0);
@@ -177,16 +210,22 @@ const newItemBtnListener = (() => {
             //wipe default list
             //start new project with name given (key name in local storage obj)
             projectName = prompt('Please enter the name of your project', 'myProject');
-            //add new project name to top of page
-            document.querySelector('#projectNameHeader').textContent = projectName;
-            //create new folder in current project list
-            createProjectFolder(projectName);
-            //clear default array list 
-            const ol = document.querySelector('.ordered-item-list');
-            const d = deleteChildElements(ol);
-            d();
 
-            addClickCount(clickCount, projectName);
+            if (projectName === null) {
+                return;
+            } else {
+                //add new project name to top of page
+                document.querySelector('#projectNameHeader').textContent = projectName;
+                //create new folder in current project list
+                createProjectFolder(projectName);
+                //clear default array list 
+                const ol = document.querySelector('.ordered-item-list');
+                const d = deleteChildElements(ol);
+                d();
+
+                addClickCount(clickCount, projectName);
+            }
+            
         }
     
         removeDisplayNone(inputNewItem);
