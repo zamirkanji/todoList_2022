@@ -33,6 +33,7 @@ const addDisplayNone = (d) => {
     return d.classList.add('display');
 }
 
+//clear all list items from the DOM
 const clearAllItemsDOM = (ol) => {
     while (ol.firstChild) {
         ol.removeChild(ol.firstChild);
@@ -67,10 +68,9 @@ const getNameAndDate = (arr, projectName) => {
     arr.forEach(obj => {
         const n = obj.name;
         const dc = obj.dateCreated;
-
         // const createItem = createItemHTML(n, dc, projectName);
         // return createItem();
-        createItemHTML(n, dc, projectName);
+        return createItemHTML(n, dc, projectName);
     })
 }
 
@@ -104,18 +104,24 @@ const checkLocalStorage = (clickCount, projectName, item) => {
 }
 
 const newProjBtn = (() => {
+    let clickCount = 0;
+    const newItemBtn = document.querySelector('#create-new-item-btn');
+    const inputNewItem = document.querySelector('#input-new-item');
+    const labelNewItem = document.querySelector('.label-new-item');
+    const submitBtn = document.querySelector('#submit-btn');
     const createNewBtn = document.querySelector('.create-new-btn');
     const ol = document.querySelector('.ordered-item-list');
+
     createNewBtn.addEventListener('click', () => {
-        if (checkLocalStorage) {
+        let projectName;
+        const projectExists = checkLocalStorage();
+
+        if (projectExists) {
             //clear items and name
              clearAllItemsDOM(ol);
             //create new project (obj) inside local storage
             //current proj will always be window.localstorage.key(0)
-        }
-
-        
-        if (checkLocalStorage === false) {
+        } else {
             clickCount++;
             console.log(clickCount);
             //ask user to name new project
@@ -131,13 +137,20 @@ const newProjBtn = (() => {
                 //create new folder in current project list
                 createProjectFolder(projectName);
                 //clear default array list 
-                const ol = document.querySelector('.ordered-item-list');
-                const d = deleteChildElements(ol);
-                d();
+
+
+                // const ol = document.querySelector('.ordered-item-list');
+                // const d = deleteChildElements(ol);
+                // d();
 
                 addClickCount(clickCount, projectName);
+
+                removeDisplayNone(inputNewItem);
+                removeDisplayNone(submitBtn);
+                removeDisplayNone(labelNewItem);
+
+                return formSubmission(clickCount, projectName);
             }
-            
         }
     })
 })()
@@ -188,8 +201,9 @@ const newItemBtnListener = (() => {
     newItemBtn.addEventListener('click', (e) => {
         e.preventDefault();
         //remove display none from input form items
-        let projectName;
+
         const projectExists = checkLocalStorage();
+
         if (document.querySelector('#projectNameHeader') === 'myProject') {
             removeDisplayNone(inputNewItem);
             removeDisplayNone(submitBtn);
@@ -204,28 +218,7 @@ const newItemBtnListener = (() => {
             getClickCount++;
             console.log(getClickCount);
         } else {
-            clickCount++;
-            console.log(clickCount);
-            //ask user to name new project
-            //wipe default list
-            //start new project with name given (key name in local storage obj)
-            projectName = prompt('Please enter the name of your project', 'myProject');
-
-            if (projectName === null) {
-                return;
-            } else {
-                //add new project name to top of page
-                document.querySelector('#projectNameHeader').textContent = projectName;
-                //create new folder in current project list
-                createProjectFolder(projectName);
-                //clear default array list 
-                const ol = document.querySelector('.ordered-item-list');
-                const d = deleteChildElements(ol);
-                d();
-
-                addClickCount(clickCount, projectName);
-            }
-            
+            return;
         }
     
         removeDisplayNone(inputNewItem);

@@ -3,7 +3,7 @@
     --font-weight: 300;
     --border-test: 2px solid yellow;
     --dark-blue: #344c57;
-    --dark-grey: #141414;
+    --dark-grey: #10151686;
     --light-blue: #2C5364;
     --closetowhite: #6d9eb3;
 }
@@ -30,17 +30,18 @@ html {
 .main-content {
     min-height: 100%;
     margin: 0;
-    padding: 0;
+    padding: 15px;
     background-color: black;
     display: flex;
     flex-direction: column;
     overflow: auto;
+    gap: 15px;
 }
 
 /* main sidebar */
 .main-sidebar {
     /* flex: .1; */
-    height: 200px;
+    height: 250px;
     display: flex;
     justify-content: center;
     /* align-items: center; */
@@ -48,7 +49,8 @@ html {
     margin: 0;
     padding: 15px;
     /* background-color: rgb(55, 66, 73); */
-    background-color: black;
+    background-color: var(--dark-grey);
+    border-radius: 10px;
 }
 
 
@@ -165,22 +167,23 @@ ul.sidebar-list-item > li::before {
 .main-body {
     margin: 0;
     padding: 0;
-    height: 800px;
+    height: 1000px;
     width: 100%;
     display: flex;
     flex-direction: column;
+    gap: 15px;
 }
 
 .main-header {
     margin: 0;
     padding: 10px;
-    flex: .25;
+    flex: .30;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: black;
+    background-color: var(--dark-grey);
     
-    /* border-radius: 5px; */
+    border-radius: 10px;
 }
 
 /* .menu-icon{
@@ -196,6 +199,7 @@ ul.sidebar-list-item > li::before {
 
 #projectNameHeader {
     color: var(--closetowhite);
+    /* color: black; */
     letter-spacing: 1.5px;
     font-size: 1.75rem;
 }
@@ -211,14 +215,16 @@ ul.sidebar-list-item > li::before {
 
 /* main list content */
 .main-list-content {
-    flex: 2.75;
+    flex: 2.70;
     /* height: 85%; */
     display: flex;
     flex-direction: column;
     /* border: 10px solid var(--black-color); */
     /* margin: 10px; */
+    background-color: var(--dark-grey);
     margin: 0;
     padding: 0;
+    border-radius: 10px;
     gap: 10px;
 }
 
@@ -229,7 +235,7 @@ ul.sidebar-list-item > li::before {
     display: flex;
     flex-direction: column;
     overflow: auto;
-    background-color: var(--dark-grey);
+    /* background-color: var(--dark-grey); */
     border-radius: 5px;
     gap: 50px;
 }
@@ -243,7 +249,7 @@ ul.sidebar-list-item > li::before {
     display: flex;
     flex-direction: column;
     overflow: auto;
-    gap: 10px;
+    gap: 15px;
 }
 
 .list-item-options {
@@ -297,11 +303,11 @@ ul.sidebar-list-item > li::before {
     list-style: none; */
     /* background-color: var(--closetowhite); */
     background-color: var(--dark-blue);
-    height: 45px;
+    height: 50px;
     color: var(--black-color);
     letter-spacing: 1px;
     display: flex;
-    border-radius: 5px;
+    border-radius: 10px;
     z-index: 2;
     
     /* align-items: center; */
@@ -320,9 +326,8 @@ ul.sidebar-list-item > li::before {
 .item-text {
     margin: 0;
     padding: 0;
-    color: white;
+    color: black;
     letter-spacing: 1.5px;
-    /* color: var(--closetowhite); */
     flex: 1.75;
     height: 100%;
     display: flex;
@@ -335,11 +340,11 @@ ul.sidebar-list-item > li::before {
     padding: 0;
     margin: 0;
     border: none;
-    background-color: var(--dark-grey);
+    background-color: whitesmoke;
     -webkit-appearance: none;
 	border: none;
-	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
-	padding: 10px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+	padding: 7px;
 	border-radius: 5px;
     /* width: 10px;
     height: 10px; */
@@ -374,7 +379,7 @@ input[type=text] {
     box-sizing: border-box;
     border: none;
     background-color: var(--dark-blue);
-    font-size: 1rem;
+    font-size: 1.1rem;
     /* font-size: 100%; */
 }
 
@@ -388,7 +393,7 @@ input[type=text] {
     /* height: 100%; */
     gap: 10px;
     background-color: var(--dark-blue);
-    border-radius: 0 5px 5px 0;
+    border-radius: 0 10px 10px 0;
 }
 
 .item-delete-btn {
@@ -514,6 +519,12 @@ input[type=text] {
     color: var(--closetowhite);
     padding: 10px;
     width: 75px;
+    height: 45px;
+}
+
+.create-new-btn {
+    background-color: var(--dark-blue);
+    color: black;
 }
 
 .item-btn {
