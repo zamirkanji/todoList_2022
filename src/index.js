@@ -22,6 +22,43 @@ const clearAllStorage = clearStorage();
 // clearAllStorage();
 
 
+const displayHandler = () => {
+    const inputNewItem = document.querySelector('#input-new-item');
+    const submitBtn = document.querySelector('#submit-btn');
+    const labelNewItem = document.querySelector('.label-new-item');
+//remove display (none) from element 
+    const removeDisplayNone = (d) => {
+        return d.classList.remove('display');
+    }
+
+//add display (none) to element 
+    const addDisplayNone = (d) => {
+        return d.classList.add('display');
+    }
+//add back display NONE    
+    const dontShowForm = () => {
+        addDisplayNone(inputNewItem);
+        addDisplayNone(submitBtn);
+        addDisplayNone(labelNewItem);
+        return;
+    }
+//remove display NONE
+    const showForm = () => {
+        removeDisplayNone(inputNewItem);
+        removeDisplayNone(submitBtn);
+        removeDisplayNone(labelNewItem);
+    }
+
+    return {
+        removeDisplayNone,
+        addDisplayNone,
+        dontShowForm,
+        showForm
+    }
+}
+
+
+
 //remove display (none) from element 
 const removeDisplayNone = (d) => {
     return d.classList.remove('display');
@@ -69,8 +106,9 @@ const getNameAndDate = (arr, projectName) => {
         const dc = obj.dateCreated;
         // const createItem = createItemHTML(n, dc, projectName);
         // return createItem();
-        return createItemHTML(n, dc, projectName);
+        createItemHTML(n, dc, projectName);
     })
+    return;
 }
 
 const createItemFromLocalStorage = (item, projectName) => {
@@ -89,15 +127,23 @@ const checkLocalStorage = (clickCount, projectName, item) => {
 }
 
 
-const deleteChildElements = (parentEl) => {
-    return () => {
-        if (true) {
-            while (parentEl.firstChild) {
-                parentEl.removeChild(parentEl.firstChild);
-            }   
-            //remove from arr/local storage
-        }
-    }
+// const deleteChildElements = (parentEl) => {
+//     return () => {
+//         if (true) {
+//             while (parentEl.firstChild) {
+//                 parentEl.removeChild(parentEl.firstChild);
+//             }   
+//             //remove from arr/local storage
+//         }
+//     }
+// }
+
+
+
+
+
+const firstLetterCaps = () => {
+
 }
 
 
@@ -109,30 +155,27 @@ const deleteChildElements = (parentEl) => {
 
 
 
-
-
-
-
-
-
 //listen for form submission to add each item 
+
+
+
+
+//form subbmission event listener (called after new item or project btn is clicked)
 const formSubmission = (clickCount, projectName)=> {
     const form = document.querySelector('.form-main');
+
+    const d = displayHandler();
+    console.log(d);
+
     form.addEventListener('submit', (e)=> {
         const inputValue = document.querySelector('#input-new-item').value;
-        let firstLetter = inputValue.splice(0, 1);
-        console.log(firstLetter);
+        // let firstLetter = inputValue.splice(0, 1);
+        // console.log(firstLetter);
         // inputValue.
         //remove form display
         e.preventDefault();
-        //remove dispalay (add back display: none)
-        const inputNewItem = document.querySelector('#input-new-item');
-        const submitBtn = document.querySelector('#submit-btn');
-        const labelNewItem = document.querySelector('.label-new-item');
-
-        addDisplayNone(inputNewItem);
-        addDisplayNone(submitBtn);
-        addDisplayNone(labelNewItem);
+        //remove display (add back display: none)
+        d.dontShowForm(); 
         //clear input field on form Submit
         form.reset();
         //create new list item
@@ -159,11 +202,13 @@ const formSubmission = (clickCount, projectName)=> {
 
 
 
-
-
+//function for IIFE event listeners, new item, clear all, and new project
 const mainEventListeners = (() => {
     let clickCount = 0;
     let projectName;
+
+    const d = displayHandler();
+    console.log(d);
     
     const newItemBtn = document.querySelector('#create-new-item-btn');
     const inputNewItem = document.querySelector('#input-new-item');
@@ -172,11 +217,16 @@ const mainEventListeners = (() => {
     const createNewBtn = document.querySelector('.create-new-btn');
     const ol = document.querySelector('.ordered-item-list');
 
+    //get return boolean on if project exists in local storage
     const projectExists = checkLocalStorage();
+   
 
     //create new project Btn listener
-    createNewBtn.addEventListener('click', () => {
-        if (projectExists) {
+    createNewBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('test new project btn');
+
+        if (projectExists === true) {
             //CLEAR ITEMS AND NAME
             clearAllItemsDOM(ol);
             //create new project (obj) inside local storage
@@ -194,24 +244,15 @@ const mainEventListeners = (() => {
             } else {
                 //clear default project from DOM 
                 clearAllItemsDOM(ol);
-
                 //add new project name to top of page
                 document.querySelector('#projectNameHeader').textContent = projectName;
                 //create new folder in current project list
                 createProjectFolder(projectName);
-                //clear default array list 
-
-
-                // const ol = document.querySelector('.ordered-item-list');
-                // const d = deleteChildElements(ol);
-                // d();
-
+                //add click count to session storage
                 addClickCount(clickCount, projectName);
-
-                removeDisplayNone(inputNewItem);
-                removeDisplayNone(submitBtn);
-                removeDisplayNone(labelNewItem);
-
+                //show the form input buttons
+                d.showForm();
+                //return form submission listener
                 return formSubmission(clickCount, projectName);
             }
         }
@@ -221,30 +262,22 @@ const mainEventListeners = (() => {
     newItemBtn.addEventListener('click', (e) => {
         e.preventDefault();
         //remove display none from input form items
-        console.log('test');
+        console.log('test new item');
 
         if (document.querySelector('#projectNameHeader').textContent === 'myProject') {
-            removeDisplayNone(inputNewItem);
-            removeDisplayNone(submitBtn);
-            removeDisplayNone(labelNewItem);
-
+            d.showForm();
             return formSubmission(0, 'myProject');
         }
-        if (projectExists) {
+
+        if (projectExists === true) {
             //this needs to be fixed
             const currentProject = SESSION.key(0);
             let getClickCount = SESSION.getItem('hello');
             getClickCount++;
             console.log(getClickCount);
-        } else {
-            return;
+            d.showForm();
+            return formSubmission(clickCount, projectName);   
         }
-    
-        removeDisplayNone(inputNewItem);
-        removeDisplayNone(submitBtn);
-        removeDisplayNone(labelNewItem);
-
-        return formSubmission(clickCount, projectName);
     })
 
 })();

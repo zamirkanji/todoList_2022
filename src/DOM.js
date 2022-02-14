@@ -30,7 +30,7 @@ const createItemHTML = (n, dc, projectName) => {
     const deleteBtn = document.createElement('button');
     deleteBtn.id = 'delete-item';
     const deleteIcon = document.createElement('div');
-    deleteIcon.id = 'delete-icon';
+    deleteIcon.classList.add('delete-icon');
     deleteBtn.appendChild(deleteIcon);
     createItemDeleteBtn.appendChild(deleteBtn);
 
@@ -87,12 +87,12 @@ const createItemHTML = (n, dc, projectName) => {
     if (document.querySelector('#projectNameHeader').textContent === 'myProject') {
         return;
     } else {
-            // const a = deleteBtnListener(projectName);
+            const a = deleteBtnListener(projectName);
             const b = expandBtnListener();
             const c = itemEditable();
             const d = ifChecked();
             // return a && b;
-            return b && c && d;
+            return a && b && c && d;
     }
 }
 

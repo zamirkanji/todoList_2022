@@ -42,11 +42,9 @@ html {
 /* main sidebar */
 .main-sidebar {
     /* flex: .1; */
-    min-height: 250px;
+    min-height: 300px;
     display: flex;
     justify-content: center;
-    /* align-items: center; */
-    /* align-items: space-between; */
     margin: 0;
     padding: 15px;
     /* background-color: rgb(55, 66, 73); */
@@ -297,6 +295,7 @@ ul.sidebar-list-item > li::before {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1.25rem;
 }
 
 .label-new-item {
@@ -416,6 +415,7 @@ input[type=text] {
     border: none;
     background-color: var(--dark-blue);
     font-size: 1.25rem;
+    z-index: 15;
     /* font-size: 100%; */
 }
 
@@ -448,7 +448,7 @@ input[type=text] {
 }
 
 
-#delete-icon {
+.delete-icon {
     width: 24px;
     height: 24px;
     background-image: url('./img/delete.png');
@@ -551,12 +551,14 @@ input[type=text] {
     background-color: rgb(55, 66, 73);
     background-color: black;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     color: var(--closetowhite);
     padding: 10px;
     width: 100px;
-    height: 45px;
+    height: 50px;
     font-size: 1rem;
+    letter-spacing: 1.5px;
+    font-weight: var(--font-weight);
 }
 
 .create-new-btn {

@@ -1,38 +1,51 @@
+import { mdiConsoleNetwork } from "@mdi/js";
 import { checkLocalStorage, clearAllItemsDOM } from ".";
 
 //event listener to delete item (called after item is created)
-const deleteBtnListener = (projectName) => {
+const deleteBtnListener = (projectName = 'myProject') => {
     console.log(projectName);
     const orderedList = document.querySelector('.ordered-item-list');
     const listItemDeleteBtns = document.querySelectorAll('#delete-item');
     
 
-    for (let i = 0; i < listItemDeleteBtns.length; i++) {
-        // console.log(i);
-        const btnIndex = i;
-    }
+    // for (let i = 0; i < listItemDeleteBtns.length; i++) {
+    //     // console.log(i);
+    //     const btnIndex = i;
+    // }
 
-    for(let j = 0; j < itemListArr.length; j++) {
-        // console.log(j);
-        const listItemIndex = j; 
-    }
+    // for(let j = 0; j < itemListArr.length; j++) {
+    //     // console.log(j);
+    //     const listItemIndex = j; 
+    // }
 
     orderedList.addEventListener('click', (e) => {
-        const answer = confirm('are you sure you want to delete this item?');
-        if (answer) {
-            console.log(e.target);
+        // console.log(e.target);
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        e.stopPropagation();
+        console.log(e.target);
+        const parent = e.target.parentNode;
+        if (e.target.classList.contains('delete-icon')) {
+            console.log('delete icon');
+            const answer = confirm('are you sure you want to delete this item?');
+            if (answer) {
+                console.log(e.target);
+            }
+        } else {
+            return;
         }
-    })
+        
+    }, false);
 
-    listItemDeleteBtns.forEach(btn => {
-        btn.addEventListener('click', e => {
-            const listItem = e.target.parentNode.parentNode.parentNode.parentNode;
-            const confirmAnswer = confirm('are you sure you want to delete this item?');
-            if (confirmAnswer) {
-                listItem.remove();
-            } 
-        })
-    })
+    // listItemDeleteBtns.forEach(btn => {
+    //     btn.addEventListener('click', e => {
+    //         const listItem = e.target.parentNode.parentNode.parentNode.parentNode;
+    //         const confirmAnswer = confirm('are you sure you want to delete this item?');
+    //         if (confirmAnswer) {
+    //             listItem.remove();
+    //         } 
+    //     })
+    // })
 };
 
 const clearAllBtnListener = (() => {
