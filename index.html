@@ -7,12 +7,37 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>To Do List</title>
 </head>
-<body class="main-content">
-    <div class="main-sidebar" id="main-sidebar">
-        <div class="sidebar-title">
-            <i class="material-icons close-sidebar-icon">close</i>
-            <h3 id="sidebar-title-text" class="text">Projects</h3>
+<body class="main-content"> 
+    <div class="main-body" id="main-body">
+        <div class="main-header">
+            <!-- <div class="menu-icon" id="menu-icon">
+            </div> -->
+            <h2 id="projectNameHeader">myProject</h2>
+            <h3 id="header-text" class="header-text text">To Do List</h3>
         </div>
+        <div class="main-list-content">
+            <div class="list-container">
+                <ol class="ordered-item-list">
+                </ol>
+                <div class="list-item-options">
+                    <form action="" class="form-main">
+                        <button id="create-new-item-btn" class="btn">+</button>
+                        
+                        <label for="input-new-item" class="label-new-item display"></label>
+                        <input type="text" id="input-new-item" name="input-new-item" class="display" value="" required><br>
+                        <input type="submit" value="Submit" class="btn display" id="submit-btn">
+                    </form>
+                    <button id="clear-all-items-btn" class="btn">Clear All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-sidebar" id="main-sidebar">
+        <!-- <div class="sidebar-title">
+            <i class="material-icons close-sidebar-icon">close</i> -->
+            <!-- <h3 id="sidebar-title-text" class="text">Projects</h3>
+        </div> -->
         <div class="sidebar-project-list">
             <ul class="sidebar-main-list">
                 <ul class="sidebar-list-item text" id="current-p">Current Project</ul>
@@ -24,32 +49,6 @@
             <button class="create-new-btn btn text">New</button>
         </div>
     </div>
-    
-    <div class="main-body" id="main-body">
-        <div class="main-header">
-            <div class="menu-icon" id="menu-icon">
-            </div>
-            <h2 id="projectNameHeader">myProject</h2>
-            <h3 id="header-text" class="header-text text">To Do List</h3>
-        </div>
-        <div class="main-list-content">
-            <div class="list-container">
-                <ol class="ordered-item-list">
-                </ol>
-                <div class="list-item-options">
-                    <form action="" class="form-main">
-                        <button id="create-new-item-btn" class="btn">+</button>
-
-                        <label for="input-new-item" class="label-new-item display"></label>
-                        <input type="text" id="input-new-item" name="input-new-item" class="display" value="" required><br>
-                        <input type="submit" value="Submit" class="btn display" id="submit-btn">
-                    </form>
-                    <button id="clear-all-items-btn" class="btn">Clear All</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="main.js"></script>
 </body>
 </html>
