@@ -3,10 +3,10 @@ import DOMLoaded from './loadPage';
 import menuIcon from './img/menu.png';
 import expand from './img/noun-expand-1181747.png';
 import { mdiChevronDown, mdiConsoleLine, mdiControllerClassic, mdiWindowShutter } from '@mdi/js';
-import { getDate, itemListArr, ListItem } from './app.js';
+import { getDate, itemListArr, ListItem, getDateAndTime } from './app.js';
 import createDefaultArrayList from './defaultProject';
 import createItemHTML from './DOM';
-import { deleteBtnListener, expandBtnListener, clearAllBtnListener, ifChecked } from './btnListeners';
+import { deleteBtnListener, expandBtnListener, clearAllBtnListener, ifChecked, dateAndTime } from './btnListeners';
 
 const LOCAL = window.localStorage;
 const SESSION = window.sessionStorage;
@@ -179,7 +179,8 @@ const formSubmission = (clickCount, projectName)=> {
         //clear input field on form Submit
         form.reset();
         //create new list item
-        const item = new ListItem(`${inputValue}`, getDate());
+        // const item = new ListItem(`${inputValue}`, getDate());
+        const item = new ListItem(`${inputValue}`, dateAndTime.getDate(), dateAndTime.getTime());
         //check if LOCAL STORAGE is empty or not 
         if(projectName == 'myProject') {
             return getNameAndDate(item, projectName);
@@ -208,7 +209,7 @@ const mainEventListeners = (() => {
     let projectName;
 
     const d = displayHandler();
-    console.log(d);
+    // console.log(d);
     
     const newItemBtn = document.querySelector('#create-new-item-btn');
     const inputNewItem = document.querySelector('#input-new-item');
@@ -364,7 +365,7 @@ const projectLocalStorage = (clickCount, projectName, item) => {
         // JSON.parse(proj);
         console.log(proj);
         proj.push(item);
-        console.log(item, getCurrentProjectName);
+        // console.log(item, getCurrentProjectName);
         // LOCAL.setItem(`${projectName}`, JSON.stringify(proj));
         LOCAL.setItem(getCurrentProjectName, JSON.stringify(proj));
         // createItemFromLocalStorage(item, projectName);
@@ -383,7 +384,7 @@ const projectLocalStorage = (clickCount, projectName, item) => {
 //JSON.parse item list arr, and create html element for each item in LOCAL storage 
 const loadSessionStoragePage = (projectName) => {
     document.querySelector('#projectNameHeader').textContent = projectName;
-    console.log(projectName);
+    // console.log(projectName);
     const toDoListHeader = document.querySelector('.header-text');
     //create folder in sidebar on page load
     //will need to show all projects in sidebar
@@ -400,6 +401,11 @@ const createProjectFolder = (projectName) => {
     const root = document.querySelector(':root');
     const currentP = document.querySelector('#current-p');
     const sideBarMainList = document.querySelector('.sidebar-main-list');
+
+
+    // let currentProjectName = LOCAL.key(0);
+    // console.log(currentProjectName);
+
 
     const rs = getComputedStyle(root);
     const darkBlue = rs.getPropertyValue('--dark-blue');

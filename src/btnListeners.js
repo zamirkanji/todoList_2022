@@ -1,11 +1,16 @@
 import { mdiConsoleNetwork } from "@mdi/js";
 import { checkLocalStorage, clearAllItemsDOM } from ".";
+import { getDateAndTime } from "./app";
+
+const dateAndTime = getDateAndTime();
 
 //event listener to delete item (called after item is created)
 const deleteBtnListener = (projectName = 'myProject') => {
-    console.log(projectName);
+    // console.log(projectName);
     const orderedList = document.querySelector('.ordered-item-list');
     const listItemDeleteBtns = document.querySelectorAll('#delete-item');
+    const currentProjectName = window.localStorage.key(0);
+    const currentProjObject = window.localStorage.getItem(currentProjectName);
     
 
     // for (let i = 0; i < listItemDeleteBtns.length; i++) {
@@ -24,12 +29,24 @@ const deleteBtnListener = (projectName = 'myProject') => {
         e.stopImmediatePropagation();
         e.stopPropagation();
         console.log(e.target);
-        const parent = e.target.parentNode;
+        
         if (e.target.classList.contains('delete-icon')) {
-            console.log('delete icon');
+            const listItemText = e.target.parentNode.parentNode.parentNode.parentNode.childNodes[0].childNodes[2].value;
+            let currentProjectArrayFromStorage = window.localStorage.getItem(currentProjectName);
+            currentProjectArrayFromStorage = JSON.parse(currentProjectArrayFromStorage);
+            let item; 
+
+            currentProjectArrayFromStorage = currentProjectArrayFromStorage.filter(o => {
+                console.log(o.name);
+                return o.name != listItemText;
+            })
+            console.log(currentProjectArrayFromStorage);
+
             const answer = confirm('are you sure you want to delete this item?');
-            if (answer) {
-                console.log(e.target);
+            if (answer === true) {
+                // curr
+                console.log(e.target.parentNode);
+                return;
             }
         } else {
             return;
@@ -69,7 +86,7 @@ const clearAllBtnListener = (() => {
         //would you like to clear all items and start over or delete project
         //delete all children under ordered item list 
         
-    })
+    }, false);
 })();
 
 
@@ -98,7 +115,7 @@ const expandBtnListener = () => {
         const details = document.createElement('div');
         details.classList.add('details-container');
         goShoppingItemTest.appendChild(details);  
-    })
+    }, false);
 };
 
 const deleteAllProjects = () => {
@@ -108,9 +125,11 @@ const deleteAllProjects = () => {
 
 
 const ifChecked = (e) => {
-    const dateCheckedOff = new Date().toLocaleDateString();
+    // const timeStamp = dateAndTime.getTime();
+    // console.log(timeStamp);
     const checkBoxIsChecked = document.querySelector('#item-checkbox');
-    checkBoxIsChecked.addEventListener('change', e => {
+    checkBoxIsChecked.addEventListener('change', (e) => {
+        console.log('change');
         //this input should be attached to the list item somehow
         //could make the list item the same input
         if (e.target.checked) {
@@ -118,11 +137,12 @@ const ifChecked = (e) => {
             //add datecheckedoff to listItem object
         }
     })
-}
+};
 
 export {
     deleteBtnListener,
     expandBtnListener,
     clearAllBtnListener,
-    ifChecked
+    ifChecked,
+    dateAndTime
 }
