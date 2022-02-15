@@ -155,11 +155,7 @@ const firstLetterCaps = () => {
 
 
 
-//listen for form submission to add each item 
-
-
-
-
+//listen for form submission to add each item p0-oxzr4
 //form subbmission event listener (called after new item or project btn is clicked)
 const formSubmission = (clickCount, projectName)=> {
     const form = document.querySelector('.form-main');
@@ -352,7 +348,7 @@ const mainEventListeners = (() => {
 //the value of the key value pair is the object array that is created for each project (list of items)
 const projectLocalStorage = (clickCount, projectName, item) => {
     const getCurrentProjectName = document.querySelector('#projectNameHeader').textContent;
-    console.log(getCurrentProjectName);
+    // console.log(getCurrentProjectName);
     const localStorageItemList = [];
     //FIND PROJECT NAME AND PUSH LAST ITEM INTO IT 
 
@@ -438,6 +434,7 @@ const loadDefaultPage = () => {
 
 //LOAD PAGE
 const loadPage = (()  => DOMLoaded(loadDefaultPage, loadSessionStoragePage))();
+
 
 export {
     deleteBtnListener, 

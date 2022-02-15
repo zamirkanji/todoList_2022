@@ -8,6 +8,9 @@ const dateAndTime = getDateAndTime();
 const deleteBtnListener = (projectName = 'myProject') => {
     // console.log(projectName);
     const orderedList = document.querySelector('.ordered-item-list');
+    // const itemOptionsContainer = document.querySelector('.items-options-container');
+    const itemDeleteBtn = document.querySelector('.item-delete-btn');
+    const itemDeleteBtnsAll = document.querySelectorAll('.item-delete-btn');
     const listItemDeleteBtns = document.querySelectorAll('#delete-item');
     const currentProjectName = window.localStorage.key(0);
     const currentProjObject = window.localStorage.getItem(currentProjectName);
@@ -23,37 +26,41 @@ const deleteBtnListener = (projectName = 'myProject') => {
     //     const listItemIndex = j; 
     // }
 
-    orderedList.addEventListener('click', (e) => {
-        // console.log(e.target);
-        // e.preventDefault();
-        // e.stopImmediatePropagation();
-        // e.stopPropagation();
-        
-        
-        if (e.target.classList.contains('delete-icon')) {
-            const listItemText = e.target.parentNode.parentNode.parentNode.parentNode.childNodes[0].childNodes[2].value;
-            let currentProjectArrayFromStorage = window.localStorage.getItem(currentProjectName);
-            currentProjectArrayFromStorage = JSON.parse(currentProjectArrayFromStorage);
-            let item; 
+    console.log(itemDeleteBtnsAll);
 
-            currentProjectArrayFromStorage = currentProjectArrayFromStorage.filter(o => {
-                console.log(o.name);
-                return o.name != listItemText;
-            })
-            console.log(currentProjectArrayFromStorage);
+    itemDeleteBtnsAll.forEach(b => {
+        b.addEventListener('click', e => {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            e.stopPropagation();
 
-            const answer = confirm('are you sure you want to delete this item?');
-            if (answer === true) {
-                // curr
-                console.log(e.target.parentNode);
+            // current 
+            console.log(e.target.parentNode);
+            
+            if (e.target.classList.contains('delete-icon')) {
+                const answer = confirm('are you sure you want to delete this item?');
+                console.log(answer);
+                if (answer === true) {
+                    const listItemText = e.target.parentNode.parentNode.parentNode.parentNode.childNodes[0].childNodes[2].value;
+                    let currentProjectArrayFromStorage = window.localStorage.getItem(currentProjectName);
+                    currentProjectArrayFromStorage = JSON.parse(currentProjectArrayFromStorage);
+                    let item; 
+        
+                    currentProjectArrayFromStorage = currentProjectArrayFromStorage.filter(o => {
+                        console.log(o.name);
+                        return o.name != listItemText;
+                    })
+                    console.log(currentProjectArrayFromStorage);
+                }
+                if (answer == false) {
+                    return;
+                } 
+            } else {
                 return;
             }
-        } else {
-            return;
-        }
-        
-    }, false);
-
+        }, false);
+    })
+    
     // listItemDeleteBtns.forEach(btn => {
     //     btn.addEventListener('click', e => {
     //         const listItem = e.target.parentNode.parentNode.parentNode.parentNode;
@@ -125,12 +132,19 @@ const deleteAllProjects = () => {
 
 
 const ifChecked = (e) => {
+    //get item that corresponds with the checkbox 
+    //change checked: false to true in local storage
+    //when page is loaded and DOM item is created, make sure checkbox stays 
+
+
+
     // const timeStamp = dateAndTime.getTime();
     // console.log(timeStamp);
     
     const checkBoxIsChecked = document.querySelector('#item-checkbox');
     const allCheckBoxes = document.querySelectorAll('#item-checkbox');
-    console.log(allCheckBoxes);
+    // console.log(checkBoxIsChecked);
+    // console.log(allCheckBoxes);
     checkBoxIsChecked.addEventListener('change', (e) => {
         console.log(e.currentTarget);
         console.log('change');

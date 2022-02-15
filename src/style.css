@@ -340,7 +340,7 @@ ul.sidebar-list-item > li::before {
     letter-spacing: 1px;
     display: flex;
     border-radius: 10px;
-    /* z-index: 2; */
+    z-index: 1;
     
     /* align-items: center; */
     /* justify-content: space-between; */
