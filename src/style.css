@@ -408,6 +408,14 @@ input[type=text] {
     /* font-size: 100%; */
 }
 
+input[type=text] .item-text::placeholder {  
+    color: black;
+}
+
+.item-text:focus {
+    color: black;
+}
+
 .item-options-container {
     flex: .25;
     display: flex;
