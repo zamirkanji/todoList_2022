@@ -25,10 +25,10 @@ const deleteBtnListener = (projectName = 'myProject') => {
 
     orderedList.addEventListener('click', (e) => {
         // console.log(e.target);
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        e.stopPropagation();
-        console.log(e.target);
+        // e.preventDefault();
+        // e.stopImmediatePropagation();
+        // e.stopPropagation();
+        
         
         if (e.target.classList.contains('delete-icon')) {
             const listItemText = e.target.parentNode.parentNode.parentNode.parentNode.childNodes[0].childNodes[2].value;
@@ -127,8 +127,12 @@ const deleteAllProjects = () => {
 const ifChecked = (e) => {
     // const timeStamp = dateAndTime.getTime();
     // console.log(timeStamp);
+    
     const checkBoxIsChecked = document.querySelector('#item-checkbox');
+    const allCheckBoxes = document.querySelectorAll('#item-checkbox');
+    console.log(allCheckBoxes);
     checkBoxIsChecked.addEventListener('change', (e) => {
+        console.log(e.currentTarget);
         console.log('change');
         //this input should be attached to the list item somehow
         //could make the list item the same input
