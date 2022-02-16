@@ -1,4 +1,4 @@
-import { deleteBtnListener, expandBtnListener, itemEditable, ifChecked } from ".";
+import { deleteBtnListener, expandBtnListener, itemEditable, ifChecked } from "./btnListeners";
 import { ListItem } from "./app";
 
 
@@ -89,12 +89,12 @@ const createItemHTML = (n, dc, projectName) => {
     if (document.querySelector('#projectNameHeader').textContent === 'myProject') {
         return;
     } else {
-            // const a = deleteBtnListener(projectName);
+            const a = deleteBtnListener(projectName);
             const b = expandBtnListener();
             // const c = itemEditable();
-            // const d = ifChecked();
+            const d = ifChecked();
             // return a && b;
-            return b;
+            return a && b && d;
     }
 }
 
