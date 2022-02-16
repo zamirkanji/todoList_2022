@@ -95,32 +95,6 @@ class ListItem {
     }
 }
 
-    
-const clearAllBtnListener = (() => {
-    //once cleared, start new project?
-    //or just a n
-    const clearAllBtn = document.getElementById('clear-all-items-btn');
-    clearAllBtn.addEventListener('click', () => {
-        //get current project (Whatever is clicked on sidebar)
-        const getCurrentProjectName = window.localStorage.key(0);
-        console.log('delete btn clicked');
-        const ol = document.querySelector('.ordered-item-list');
-        const confirmDeleteAll = confirm('Would you like to clear all items?');
-        if (confirmDeleteAll) {
-            clearAllItemsDOM(ol);
-            //remove from arr/local storage
-            // console.log(projectName);
-            LOCAL.removeItem(getCurrentProjectName);
-        } else {
-            return;
-        }
-        //would you like to clear all items and start over or delete project
-        //delete all children under ordered item list 
-        
-    }, false);
-})();
-
-
 console.log(ListItem.prototype);
 
 class DOMItem {

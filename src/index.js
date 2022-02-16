@@ -375,19 +375,6 @@ const loadDefaultPage = () => {
 const loadPage = (()  => DOMLoaded(loadDefaultPage, loadSessionStoragePage))();
 
 
-const callListeners = () => {
-    const a = deleteBtnListener();
-    // const b = expandBtnListener();
-    const c = ifChecked();
-    return () => {
-        a, 
-        c
-    }
-}
-const callListener = callListeners();
-callListener();
-
-
 export {
     // deleteBtnListener, 
     expandBtnListener,
