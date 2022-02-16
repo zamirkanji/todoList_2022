@@ -1,4 +1,5 @@
 import { deleteBtnListener, expandBtnListener, itemEditable, ifChecked } from ".";
+import { ListItem } from "./app";
 
 
 
@@ -83,16 +84,17 @@ const createItemHTML = (n, dc, projectName) => {
     orderedItemList.appendChild(newListItem);
 
 
+
     //return delete btn, expand btn listener once item is created 
     if (document.querySelector('#projectNameHeader').textContent === 'myProject') {
         return;
     } else {
-            const a = deleteBtnListener(projectName);
+            // const a = deleteBtnListener(projectName);
             const b = expandBtnListener();
-            const c = itemEditable();
-            const d = ifChecked();
+            // const c = itemEditable();
+            // const d = ifChecked();
             // return a && b;
-            return a && b && c && d;
+            return b;
     }
 }
 

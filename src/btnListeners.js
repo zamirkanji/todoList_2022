@@ -1,12 +1,11 @@
 import { mdiConsoleNetwork } from "@mdi/js";
 import { checkLocalStorage, clearAllItemsDOM } from ".";
-import { getDateAndTime } from "./app";
+import { getDateAndTime, ListItem } from "./app";
 
 const dateAndTime = getDateAndTime();
 
 //event listener to delete item (called after item is created)
 const deleteBtnListener = (projectName = 'myProject') => {
-    // console.log(projectName);
     const orderedList = document.querySelector('.ordered-item-list');
     // const itemOptionsContainer = document.querySelector('.items-options-container');
     const itemDeleteBtn = document.querySelector('.item-delete-btn');
@@ -14,17 +13,6 @@ const deleteBtnListener = (projectName = 'myProject') => {
     const listItemDeleteBtns = document.querySelectorAll('#delete-item');
     const currentProjectName = window.localStorage.key(0);
     const currentProjObject = window.localStorage.getItem(currentProjectName);
-    
-
-    // for (let i = 0; i < listItemDeleteBtns.length; i++) {
-    //     // console.log(i);
-    //     const btnIndex = i;
-    // }
-
-    // for(let j = 0; j < itemListArr.length; j++) {
-    //     // console.log(j);
-    //     const listItemIndex = j; 
-    // }
 
     console.log(itemDeleteBtnsAll);
 
@@ -60,17 +48,8 @@ const deleteBtnListener = (projectName = 'myProject') => {
             }
         }, false);
     })
-    
-    // listItemDeleteBtns.forEach(btn => {
-    //     btn.addEventListener('click', e => {
-    //         const listItem = e.target.parentNode.parentNode.parentNode.parentNode;
-    //         const confirmAnswer = confirm('are you sure you want to delete this item?');
-    //         if (confirmAnswer) {
-    //             listItem.remove();
-    //         } 
-    //     })
-    // })
 };
+
 
 const clearAllBtnListener = (() => {
     //once cleared, start new project?
@@ -135,27 +114,42 @@ const ifChecked = (e) => {
     //get item that corresponds with the checkbox 
     //change checked: false to true in local storage
     //when page is loaded and DOM item is created, make sure checkbox stays 
-
-
-
-    // const timeStamp = dateAndTime.getTime();
-    // console.log(timeStamp);
+    const timeStamp = dateAndTime.getTime();
+    console.log(timeStamp);
     
-    const checkBoxIsChecked = document.querySelector('#item-checkbox');
-    const allCheckBoxes = document.querySelectorAll('#item-checkbox');
-    // console.log(checkBoxIsChecked);
+    const checkboxes = document.querySelectorAll('input[type=checkbox');
+    // const allCheckBoxes = document.querySelectorAll('#item-checkbox');
+    // console.log(checkbox);
     // console.log(allCheckBoxes);
-    checkBoxIsChecked.addEventListener('change', (e) => {
-        console.log(e.currentTarget);
-        console.log('change');
-        //this input should be attached to the list item somehow
-        //could make the list item the same input
-        if (e.target.checked) {
-            console.log('is checked');
-            //add datecheckedoff to listItem object
-        }
+    checkboxes.forEach(box => {
+        box.addEventListener('change', (e) => {
+            console.log(e.currentTarget);
+            console.log('change');
+            //this input should be attached to the list item somehow
+            //could make the list item the same input
+            if (e.currentTarget.checked) {
+                console.log('is checked');
+                //add datecheckedoff to listItem object
+                return;
+            } else {
+                return;
+            }
+        }, false)
     })
 };
+
+// const callListeners = () => {
+//     const a = deleteBtnListener();
+//     // const b = expandBtnListener();
+//     const c = ifChecked();
+//     return () => {
+//         a, 
+//         c
+//     }
+// }
+// const callListener = callListeners();
+// callListener();
+
 
 export {
     deleteBtnListener,

@@ -341,13 +341,7 @@ ul.sidebar-list-item > li::before {
     display: flex;
     border-radius: 10px;
     z-index: 1;
-    
-    /* align-items: center; */
-    /* justify-content: space-between; */
-    /* font-size: 100%; */
-    /* flex: 1.75; */
     transition: all .5s ease;
-    /* transition: cubic-bezier(0.165, 0.84, 0.44, 1); */
 }
 
 .list-input-container {
@@ -367,7 +361,8 @@ ul.sidebar-list-item > li::before {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    z-index: 2;
+    /* z-index: 20; */
+    /* font-size: 1.75rem; */
 }
 
 
@@ -404,15 +399,16 @@ input[type=text] {
     border: none;
     background-color: var(--dark-blue);
     font-size: 1.25rem;
+    color: black;
+    z-index: 20;
     /* z-index: 15; */
     /* font-size: 100%; */
 }
 
-input[type=text] .item-text::placeholder {  
+.item-text::placeholder {  
     color: black;
 }
-
-.item-text:focus {
+input::-webkit-input-placeholder {
     color: black;
 }
 

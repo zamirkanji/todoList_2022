@@ -3,79 +3,18 @@ import DOMLoaded from './loadPage';
 import menuIcon from './img/menu.png';
 import expand from './img/noun-expand-1181747.png';
 import { mdiChevronDown, mdiConsoleLine, mdiControllerClassic, mdiWindowShutter } from '@mdi/js';
-import { getDate, itemListArr, ListItem, getDateAndTime } from './app.js';
+import { getDate, itemListArr, ListItem, getDateAndTime, displayHandler, clearStorage, clearAllItemsDOM, addDisplayNone, removeDisplayNone } from './app.js';
 import createDefaultArrayList from './defaultProject';
 import createItemHTML from './DOM';
-import { deleteBtnListener, expandBtnListener, clearAllBtnListener, ifChecked, dateAndTime } from './btnListeners';
+import {deleteBtnListener, expandBtnListener, clearAllBtnListener, ifChecked, dateAndTime } from './btnListeners';
 
 const LOCAL = window.localStorage;
 const SESSION = window.sessionStorage;
 
-const clearStorage = () => {
-    return () => {
-        window.localStorage.clear();
-        window.sessionStorage.clear();
-    }
-    
-}
+
 const clearAllStorage = clearStorage();
 // clearAllStorage();
 
-
-const displayHandler = () => {
-    const inputNewItem = document.querySelector('#input-new-item');
-    const submitBtn = document.querySelector('#submit-btn');
-    const labelNewItem = document.querySelector('.label-new-item');
-//remove display (none) from element 
-    const removeDisplayNone = (d) => {
-        return d.classList.remove('display');
-    }
-
-//add display (none) to element 
-    const addDisplayNone = (d) => {
-        return d.classList.add('display');
-    }
-//add back display NONE    
-    const dontShowForm = () => {
-        addDisplayNone(inputNewItem);
-        addDisplayNone(submitBtn);
-        addDisplayNone(labelNewItem);
-        return;
-    }
-//remove display NONE
-    const showForm = () => {
-        removeDisplayNone(inputNewItem);
-        removeDisplayNone(submitBtn);
-        removeDisplayNone(labelNewItem);
-    }
-
-    return {
-        removeDisplayNone,
-        addDisplayNone,
-        dontShowForm,
-        showForm
-    }
-}
-
-
-
-//remove display (none) from element 
-const removeDisplayNone = (d) => {
-    return d.classList.remove('display');
-}
-
-//add display (none) to element 
-const addDisplayNone = (d) => {
-    return d.classList.add('display');
-}
-
-//clear all list items from the DOM
-const clearAllItemsDOM = (ol) => {
-    while (ol.firstChild) {
-        ol.removeChild(ol.firstChild);
-    }
-    return;
-}
 
 //make item editable - 
 //need submit and cancel btn once dbl clicked
@@ -113,6 +52,7 @@ const getNameAndDate = (arr, projectName) => {
 
 const createItemFromLocalStorage = (item, projectName) => {
     // const d = createDefaultArrayList();
+    // console.log(item);
     const d = item;
         const n = d.name;
         const dc = d.dateCreated;
@@ -177,6 +117,7 @@ const formSubmission = (clickCount, projectName)=> {
         //create new list item
         // const item = new ListItem(`${inputValue}`, getDate());
         const item = new ListItem(`${inputValue}`, dateAndTime.getDate(), dateAndTime.getTime());
+        
         //check if LOCAL STORAGE is empty or not 
         if(projectName == 'myProject') {
             return getNameAndDate(item, projectName);
@@ -354,8 +295,6 @@ const projectLocalStorage = (clickCount, projectName, item) => {
 
     const projectExists = checkLocalStorage();
 
-    
-    
     if (projectExists) {
         let proj = JSON.parse(LOCAL.getItem(getCurrentProjectName));
         // JSON.parse(proj);
@@ -436,8 +375,21 @@ const loadDefaultPage = () => {
 const loadPage = (()  => DOMLoaded(loadDefaultPage, loadSessionStoragePage))();
 
 
+const callListeners = () => {
+    const a = deleteBtnListener();
+    // const b = expandBtnListener();
+    const c = ifChecked();
+    return () => {
+        a, 
+        c
+    }
+}
+const callListener = callListeners();
+callListener();
+
+
 export {
-    deleteBtnListener, 
+    // deleteBtnListener, 
     expandBtnListener,
     itemEditable,
     ifChecked,
