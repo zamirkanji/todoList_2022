@@ -50,6 +50,7 @@ const displayHandler = () => {
     const inputNewItem = document.querySelector('#input-new-item');
     const submitBtn = document.querySelector('#submit-btn');
     const labelNewItem = document.querySelector('.label-new-item');
+    const inputItemContainer = document.querySelector('.input-item-container');
 //remove display (none) from element 
     const removeDisplayNone = (d) => {
         return d.classList.remove('display');
@@ -61,16 +62,12 @@ const displayHandler = () => {
     }
 //add back display NONE    
     const dontShowForm = () => {
-        addDisplayNone(inputNewItem);
-        addDisplayNone(submitBtn);
-        addDisplayNone(labelNewItem);
+        addDisplayNone(inputItemContainer);
         return;
     }
 //remove display NONE
     const showForm = () => {
-        removeDisplayNone(inputNewItem);
-        removeDisplayNone(submitBtn);
-        removeDisplayNone(labelNewItem);
+        removeDisplayNone(inputItemContainer);
     }
 
     return {

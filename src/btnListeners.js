@@ -8,12 +8,12 @@ const dateAndTime = getDateAndTime();
 //test this (Event delegation)
 const documentEventListener = (() => {
     document.addEventListener('click', e => {
-        if (e.target.id = 'delete-item') {
+        if (e.target.id === 'delete-item') {
             console.log('delete item test');
         } else {
             return
         }
-        if (e.target.id = 'item-checkbox') {
+        if (e.target.id === 'item-checkbox') {
             console.log('item checkbox test');
         } else {
             return

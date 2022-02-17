@@ -99,6 +99,7 @@ const firstLetterCaps = () => {
 //form subbmission event listener (called after new item or project btn is clicked)
 const formSubmission = (clickCount, projectName)=> {
     const form = document.querySelector('.form-main');
+    const cancelResetBtn = document.querySelector('#cancel-btn');
 
     const d = displayHandler();
     console.log(d);
@@ -123,6 +124,10 @@ const formSubmission = (clickCount, projectName)=> {
             return getNameAndDate(item, projectName);
         }
         return projectLocalStorage(clickCount, projectName, item);
+    })
+    cancelResetBtn.addEventListener('click', () => {
+        d.dontShowForm();
+        form.reset();
     })
 };
 
@@ -154,6 +159,7 @@ const mainEventListeners = (() => {
     const submitBtn = document.querySelector('#submit-btn');
     const createNewBtn = document.querySelector('.create-new-btn');
     const ol = document.querySelector('.ordered-item-list');
+    const inputItemContainer = document.querySelector('.input-item-container');
 
     //get return boolean on if project exists in local storage
     const projectExists = checkLocalStorage();
@@ -213,7 +219,8 @@ const mainEventListeners = (() => {
             let getClickCount = SESSION.getItem('hello');
             getClickCount++;
             console.log(getClickCount);
-            d.showForm();
+            d.removeDisplayNone(inputItemContainer);
+            // d.showForm();
             return formSubmission(clickCount, projectName);   
         }
     })
