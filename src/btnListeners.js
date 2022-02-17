@@ -32,7 +32,7 @@ const deleteBtnListener = (projectName = 'myProject') => {
     const currentProjectName = window.localStorage.key(0);
     const currentProjObject = window.localStorage.getItem(currentProjectName);
 
-    console.log(itemDeleteBtnsAll);
+    // console.log(itemDeleteBtnsAll);
 
     itemDeleteBtnsAll.forEach(b => {
         b.addEventListener('click', e => {
@@ -41,26 +41,28 @@ const deleteBtnListener = (projectName = 'myProject') => {
             e.stopPropagation();
 
             // current 
-            console.log(e.target.parentNode);
+            const listItemText = e.target.parentNode.parentNode.parentNode.parentNode.childNodes[0].childNodes[2].value;
+            console.log(listItemText);
             
             if (e.target.classList.contains('delete-icon')) {
                 const answer = confirm('are you sure you want to delete this item?');
-                console.log(answer);
                 if (answer === true) {
-                    const listItemText = e.target.parentNode.parentNode.parentNode.parentNode.childNodes[0].childNodes[2].value;
+                    //delete item from local storage 
+                    //either reload page and create all items again or also delete from DOM until page is reloaded next 
                     let currentProjectArrayFromStorage = window.localStorage.getItem(currentProjectName);
                     currentProjectArrayFromStorage = JSON.parse(currentProjectArrayFromStorage);
                     let item; 
-        
+                    
                     currentProjectArrayFromStorage = currentProjectArrayFromStorage.filter(o => {
                         console.log(o.name);
                         return o.name != listItemText;
                     })
-                    console.log(currentProjectArrayFromStorage);
+
+                    e.target.remove();
+                    // console.log(currentProjectArrayFromStorage);
+                } else {
+                    return
                 }
-                if (answer == false) {
-                    return;
-                } 
             } else {
                 return;
             }
@@ -73,17 +75,20 @@ const clearAllBtnListener = (() => {
     //once cleared, start new project?
     //or just a n
     const clearAllBtn = document.getElementById('clear-all-items-btn');
-    clearAllBtn.addEventListener('click', () => {
+    clearAllBtn.addEventListener('click', (e) => {
         //get current project (Whatever is clicked on sidebar)
         const getCurrentProjectName = window.localStorage.key(0);
-        console.log('delete btn clicked');
         const ol = document.querySelector('.ordered-item-list');
         const confirmDeleteAll = confirm('Would you like to clear all items?');
         if (confirmDeleteAll) {
             clearAllItemsDOM(ol);
-            //remove from arr/local storage
-            // console.log(projectName);
-            LOCAL.removeItem(getCurrentProjectName);
+            //remove ALL ITEMS from arr/local storage
+            let currentProjArr = window.localStorage.getItem(getCurrentProjectName);
+            console.log(JSON.parse(currentProjArr));
+            currentProjArr = JSON.parse(currentProjArr);
+            currentProjArr.length = 0;
+            console.log(currentProjArr);
+            window.localStorage.setItem(`${getCurrentProjectName}`, JSON.stringify(currentProjArr));
         } else {
             return;
         }
