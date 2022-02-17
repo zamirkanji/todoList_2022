@@ -21,11 +21,16 @@
                 </ol>
                 <div class="list-item-options">
                     <form action="" class="form-main">
+                        <div class="input-item-container display">
+                            <label for="input-new-item" class="label-new-item"></label>
+                            <input type="text" id="input-new-item" name="input-new-item" class="input-new-item" value="" required><br>
+                            <label for="submit-btn" class="label-submit-btn"></label>
+                            <input type="submit" value="Submit" class="btn" id="submit-btn">
+                            <label for="cancel-btn"></label>
+                            <input type="reset" value="Cancel" class="btn" id="cancel-btn">
+                        </div>
                         <button id="create-new-item-btn" class="btn">+</button>
                         
-                        <label for="input-new-item" class="label-new-item display"></label>
-                        <input type="text" id="input-new-item" name="input-new-item" class="input-new-item display" value="" required><br>
-                        <input type="submit" value="Submit" class="btn display" id="submit-btn">
                     </form>
                     <button id="clear-all-items-btn" class="btn">Clear All</button>
                 </div>
