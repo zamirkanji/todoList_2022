@@ -163,19 +163,16 @@ const mainEventListeners = (() => {
 
     //get return boolean on if project exists in local storage
     const projectExists = checkLocalStorage();
+    console.log(projectExists);
    
 
     //create new project Btn listener
     createNewBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        console.log(projectExists);
         console.log('test new project btn');
 
         if (projectExists === true) {
-            //CLEAR ITEMS AND NAME
-            clearAllItemsDOM(ol);
-            //create new project (obj) inside local storage
-            //current proj will always be window.localstorage.key(0)
-        } else {
             clickCount++;
             console.log(clickCount);
             //ask user to name new project
@@ -322,6 +319,13 @@ const projectLocalStorage = (clickCount, projectName, item) => {
 
     return LOCAL;
 }
+
+
+
+
+
+
+
 
 //JSON.parse item list arr, and create html element for each item in LOCAL storage 
 const loadSessionStoragePage = (projectName) => {

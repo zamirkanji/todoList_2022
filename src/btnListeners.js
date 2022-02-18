@@ -127,6 +127,8 @@ const expandBtnListener = () => {
     }, false);
 };
 
+
+
 const deleteAllProjects = () => {
     //going to delete from local storage
 }
