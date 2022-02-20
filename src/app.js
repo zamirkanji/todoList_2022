@@ -8,15 +8,21 @@ const clearStorage = () => {
     
 }
 
-//remove display (none) from element 
-const removeDisplayNone = (d) => {
-    return d.classList.remove('display');
-}
+const qSelec = (() => {
+    const selectOneItem = (q) => {
+        const itemSelected = document.querySelector(`${q}`);
+        return itemSelected;
+    }
+    const selectMultiple = (q) => {
+        const arrOfItems = document.querySelectorAll(`${q}`);
+        return arrOfItems;
+    }
 
-//add display (none) to element 
-const addDisplayNone = (d) => {
-    return d.classList.add('display');
-}
+    return {
+        selectOneItem,
+        selectMultiple
+    }
+})();
 
 //clear all list items from the DOM
 const clearAllItemsDOM = (ol) => {
@@ -107,7 +113,6 @@ export {
     getDateAndTime,
     displayHandler,
     clearStorage,
-    removeDisplayNone,
-    addDisplayNone,
-    clearAllItemsDOM
+    clearAllItemsDOM,
+    qSelec
 }

@@ -1,7 +1,23 @@
 import { deleteBtnListener, expandBtnListener, itemEditable, ifChecked } from "./btnListeners";
 import { ListItem } from "./app";
+import { el } from "date-fns/locale";
 
 
+
+class DOMHandler {
+    constructor (i, el, t) {
+
+    }
+    createEl (i) {
+        const newEl = document.createElement(`${el}`);
+        
+    }
+
+    textC (el) {
+        el.textContent = `${t}`;
+    }
+    
+}
 
 //create btns for submit and cancel when editing item
 const createSubmitCancelBtns = () => {

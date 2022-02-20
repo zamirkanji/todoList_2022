@@ -329,12 +329,13 @@ const projectLocalStorage = (clickCount, projectName, item) => {
 
 //JSON.parse item list arr, and create html element for each item in LOCAL storage 
 const loadSessionStoragePage = (projectName) => {
+    const d = displayHandler();
     document.querySelector('#projectNameHeader').textContent = projectName;
     // console.log(projectName);
     const toDoListHeader = document.querySelector('.header-text');
     //create folder in sidebar on page load
     //will need to show all projects in sidebar
-    addDisplayNone(toDoListHeader);
+    d.addDisplayNone(toDoListHeader);
     createProjectFolder(projectName);
 
     let i = LOCAL.getItem(`${projectName}`);
